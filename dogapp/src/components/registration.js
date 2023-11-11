@@ -33,9 +33,10 @@ function Registration() {
         },
         body: JSON.stringify(info)
       })
+      .then((res) => res.json())
       .then((res) => {
         if (res.status === 200) {
-            navigate('/');
+            navigate('/feed', {username:info.username});
         }
         else {
           setError(res.error);
