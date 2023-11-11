@@ -17,15 +17,11 @@ def login():
     if request.method == 'POST':
         requestedData=json.loads(request.data)
         inputUsername = requestedData['username']
-        userInList=placeHolderSql.isUserInListMethod(inputUsername)
-        if(userInList):
-            inputPassword=requestedData['password']
-            #correctPassword=isCorrectMethod(inputUsername)
-            correctPassword=True
-            val=placeHolderSql.getRow(inputUsername)
-            if(correctPassword):
-                return jsonify(val)
-    return Response(json.dumps({"error":"DANCEDANCEBABY"}),status=201)
+        inputPassword=requestedData['password']
+        matchedRow=placeHolderSql.returnMatchedRow(inputUsername,inputPassword)
+        if(matchedRow!=None):
+            return jsonify(matchedRow)
+    return Response(json.dumps({"error":"Incorrect username or password"}),status=201)
 
 @app.route('/test')
 def returnUsername():
