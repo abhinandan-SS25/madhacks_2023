@@ -52,7 +52,9 @@ class Database():
 
     def getUser(self, username, password):
         user = dict()
-        wherequery = " where userName = '{username}' and password = '{password}'"
+        wherequery = f" where userName = '{username}'"
+        if password != None:
+            wherequery += f" and password = '{password}'"
         query = "select * from userInfo"
         query += wherequery
         self.cur.execute(query)
@@ -62,7 +64,6 @@ class Database():
         user["userName"] = extraction[1]
         user["phoneNum"] = extraction[4]
         user["verification"] = extraction[5]
-        user["password"] = extraction[7]
         user["description"] = extraction[8]
         query = "select addressID,streetAddress,city,state,country,pincode "
         query += "from userInfo,address on userInfo.addressID = address.id "
@@ -101,4 +102,25 @@ class Database():
         return user
 
     def insertUser(self, userValuesDict):
-         return
+        userName = userValuesDict["userName"]
+        phoneNum = userValuesDict["phoneNum"]
+        verification = userValuesDict["verification"]
+        password = userValuesDict["password"]
+        description = userValuesDict["description"]
+        streetAddress = userValuesDict["streetAddress"]
+        city = userValuesDict["city"]
+        state = userValuesDict["state"]
+        country = userValuesDict["country"]
+        pincode = userValuesDict["pincode"]
+        ownerName = userValuesDict["ownerName"]
+        ownerDOB = userValuesDict["ownerDOB"]
+        ownerSex = userValuesDict["ownerSex"]
+        dogName = userValuesDict["dogName"]
+        dogBreed = userValuesDict["dogBreed"]
+        dogDOB = userValuesDict["dogDOB"]
+        dogSex = userValuesDict["dogSex"]
+        dogsFavoriteActivities = userValuesDict["dogsFavoriteActivities"]
+        query = "insert into address(streetAddress, city, state, country, pincode)"
+        query += f" values ({streetAddress},{city},{state},{country},{pincode})"
+        self.cur.executescript(query)
+        return
