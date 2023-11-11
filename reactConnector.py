@@ -12,6 +12,11 @@ CORS(app)
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
 def returnPeopleAtLocation(username):
+    # CORS
+    if request.method == "OPTIONS":
+        res = Response()
+        res.headers["X-Content-Type-Options"] = "*"
+        return res
     if request.method == "GET":
         # if()
         # val=usersAtLocation(username)
