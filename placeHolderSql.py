@@ -9,4 +9,4 @@ def returnMatchedRow(username,password):
         return {"username":username,"age":5}
     return None
 def usersAtLocation(username, location):
-    return (username,"john","jamie","jack")
+    return ({"profile_picture":"pic","ownerName":"Dubey","dogsFavouriteActivities":"sex","phoneNum":"6969"})
