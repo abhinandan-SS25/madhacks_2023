@@ -8,22 +8,20 @@ CORS(app)
 
 @app.route('/login',methods = ['POST','OPTIONS'])
 def login():
+    #CORS
     if request.method=='OPTIONS':
         res = Response()
         res.headers['X-Content-Type-Options'] = '*'
         return res
-    print("Called")
+    
     if request.method == 'POST':
-        print("S1")
         requestedData=json.loads(request.data)
         inputUsername = requestedData['username']
         userInList=placeHolderSql.isUserInListMethod(inputUsername)
-        print(userInList)
         if(userInList):
             inputPassword=requestedData['password']
             #correctPassword=isCorrectMethod(inputUsername)
             correctPassword=True
-            print(inputUsername)
             val=placeHolderSql.getRow(inputUsername)
             if(correctPassword):
                 return jsonify(val)
