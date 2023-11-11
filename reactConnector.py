@@ -15,7 +15,9 @@ def returnPeopleAtLocation(username):
     if request.method == "GET":
         # if()
         # val=usersAtLocation(username)
-        val = json(data=placeHolderSql.usersAtLocation(username, "LOC"))
+        valDict=placeHolderSql.usersAtLocation(username, "LOC")
+        valDict["status"]=200
+        val = json.dumps(valDict,status=200)
         return val
 
 
