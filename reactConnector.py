@@ -15,10 +15,10 @@ def returnPeopleAtLocation(username):
     if request.method == "GET":
         # if()
         # val=usersAtLocation(username)
-        valDict=placeHolderSql.usersAtLocation(username, "LOC")
-        valDict["status"]=200
-        val = json.dumps(valDict,status=200)
-        return val
+        valDict = placeHolderSql.usersAtLocation(username, "LOC")
+        valDict["status"] = 200
+        val = json.dumps(valDict)
+        return Response(val, status=200)
 
 
 @app.route("/login", methods=["POST", "OPTIONS"])
@@ -37,7 +37,7 @@ def login():
             matchedRow = placeHolderSql.returnMatchedRow(inputUsername, inputPassword)
             matchedRow["status"] = 200
             if matchedRow != None:
-                return Response(json.dumps(matchedRow, status=200))
+                return Response(json.dumps(matchedRow), status=200)
     return Response(
         json.dumps({"error": "Incorrect username or password", "status": 201}),
         status=201,
