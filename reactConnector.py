@@ -2,9 +2,9 @@ from flask import Flask, request, redirect, url_for, jsonify, Response
 from flask_cors import CORS
 import json
 import placeHolderSql
-import Database
+#import Database
 
-database = Database.Database()
+#database = Database.Database()
 app = Flask(__name__)
 CORS(app)
 
@@ -14,8 +14,8 @@ def returnPeopleAtLocation(username):
     if request.method == "GET":
         # if()
         # val=usersAtLocation(username)
-        val = placeHolderSql.usersAtLocation(username, "LOC")
-        return jsonify(val)
+        val = json(data=placeHolderSql.usersAtLocation(username, "LOC"))
+        return val
 
 
 @app.route("/login", methods=["POST", "OPTIONS"])
@@ -34,7 +34,7 @@ def login():
             matchedRow = placeHolderSql.returnMatchedRow(inputUsername, inputPassword)
             if matchedRow != None:
                 return jsonify(matchedRow)
-    return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
+    return Response(json.dumps({"error": "Incorrect username or password", "status":201}), status=201)
 
 
 @app.route("/test/<name>")
