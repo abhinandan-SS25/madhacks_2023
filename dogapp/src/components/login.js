@@ -31,11 +31,14 @@ function Login() {
         },
         body: JSON.stringify(info)
       })
+      .then((res)=>res.json())
       .then((res) => {
+        console.log(res)
         if (res.status === 200) {
             navigate('/');
         }
         else {
+          console.log(res)
           setError(res.error);
         }
       })
