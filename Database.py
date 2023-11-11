@@ -50,23 +50,28 @@ class Database():
         #executing query
         self.cur.executescript(query)
 
-    def getUser(self, username):
+    def getUser(self, username, password):
         user = dict()
-        wherequery = " where userName = '{username}'"
+        wherequery = f" where userName = '{username}'"
+        if password != None:
+            wherequery += f" and password = '{password}'"
         query = "select * from userInfo"
         query += wherequery
         self.cur.execute(query)
-        extraction = self.cur.fetchall()[0]
+        try: extraction = self.cur.fetchall()[0]
+        #Try finding better error later
+        except IndexError: return None
         user["userName"] = extraction[1]
         user["phoneNum"] = extraction[4]
         user["verification"] = extraction[5]
-        user["password"] = extraction[7]
         user["description"] = extraction[8]
         query = "select addressID,streetAddress,city,state,country,pincode "
         query += "from userInfo,address on userInfo.addressID = address.id "
         query += wherequery
         self.cur.execute(query)
-        extraction = self.cur.fetchall()[0]
+        try: extraction = self.cur.fetchall()[0]
+        #Try finding better error later
+        except IndexError: return None
         user["streetAddress"] = extraction[1]
         user["city"] = extraction[2]
         user["state"] = extraction[3]
@@ -76,7 +81,9 @@ class Database():
         query += "from userInfo,ownerInfo on userInfo.ownerID = ownerInfo.id "
         query += wherequery
         self.cur.execute(query)
-        extraction = self.cur.fetchall()[0]
+        try: extraction = self.cur.fetchall()[0]
+        #Try finding better error later
+        except IndexError: return None
         user["ownerName"] = extraction[1]
         user["ownerDOB"] = extraction[2]
         user["ownerSex"] = extraction[3]
@@ -84,10 +91,36 @@ class Database():
         query += "from userInfo,dogInfo on userInfo.dogID = dogInfo.id "
         query += wherequery
         self.cur.execute(query)
-        extraction = self.cur.fetchall()[0]
+        try: extraction = self.cur.fetchall()[0]
+        #Try finding better error later
+        except IndexError: return None
         user["dogName"] = extraction[1]
         user["dogBreed"] = extraction[2]
         user["dogDOB"] = extraction[3]
         user["dogSex"] = extraction[4]
         user["dogsFavoriteActivities"] = extraction[5]
         return user
+
+    def insertUser(self, userValuesDict):
+        userName = userValuesDict["userName"]
+        phoneNum = userValuesDict["phoneNum"]
+        verification = userValuesDict["verification"]
+        password = userValuesDict["password"]
+        description = userValuesDict["description"]
+        streetAddress = userValuesDict["streetAddress"]
+        city = userValuesDict["city"]
+        state = userValuesDict["state"]
+        country = userValuesDict["country"]
+        pincode = userValuesDict["pincode"]
+        ownerName = userValuesDict["ownerName"]
+        ownerDOB = userValuesDict["ownerDOB"]
+        ownerSex = userValuesDict["ownerSex"]
+        dogName = userValuesDict["dogName"]
+        dogBreed = userValuesDict["dogBreed"]
+        dogDOB = userValuesDict["dogDOB"]
+        dogSex = userValuesDict["dogSex"]
+        dogsFavoriteActivities = userValuesDict["dogsFavoriteActivities"]
+        query = "insert into address(streetAddress, city, state, country, pincode)"
+        query += f" values ({streetAddress},{city},{state},{country},{pincode})"
+        self.cur.executescript(query)
+        return
