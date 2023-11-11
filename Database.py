@@ -120,7 +120,37 @@ class Database():
         dogDOB = userValuesDict["dogDOB"]
         dogSex = userValuesDict["dogSex"]
         dogsFavoriteActivities = userValuesDict["dogsFavoriteActivities"]
+
         query = "insert into address(streetAddress, city, state, country, pincode)"
         query += f" values ({streetAddress},{city},{state},{country},{pincode})"
         self.cur.executescript(query)
-        return
+        self.cur.execute(f"select id from address where streetAddress = {streetAddress}" +
+                         f" and city = {city} and state  = {state} and country = {country}" +
+                         f" and pincode = {pincode}")
+        try: addressID = self.cur.fetchall()[0][0]
+        except IndexError: return False
+
+        query = "insert into dogInfo(name, breed, dob, sex, favoriteActivities)"
+        query += f" values ({dogName}, {dogBreed}, {dogDOB}, {dogSex}, {dogsFavoriteActivities})"
+        self.cur.executescript(query)
+        self.cur.execute(f"select id from dogInfo where name = {dogName}" +
+                         f" and breed = {dogBreed} and dob  = {dogDOB} and sex = {dogSex}" +
+                         f" and favoriteActivities = {dogsFavoriteActivities}")
+        try: dogID = self.cur.fetchall()[0][0]
+        except IndexError: return False
+
+        query = "insert into ownerInfo(name, dob, sex)"
+        query += f" values ({ownerName}, {ownerDOB}, {ownerSex})"
+        self.cur.executescript(query)
+        self.cur.execute(f"select id from ownerInfo where name = {ownerName}" +
+                         f" and dob  = {ownerDOB} and sex = {dogSex}")
+        try: ownerID = self.cur.fetchall()[0][0]
+        except IndexError: return False
+
+        query = "insert into userInfo(userName,ownerID,dogID,phoneNum,verification,addressID,password,description)"
+        query += f" values ({userName},{ownerID},{dogID},{phoneNum},{verification},{addressID},{password},{description})"
+        self.cur.executescript(query)
+        self.cur.execute(f"select id from userInfo where username = {userName}")
+        try: ownerID = self.cur.fetchall()[0][0]
+        except IndexError: return False
+        return True
