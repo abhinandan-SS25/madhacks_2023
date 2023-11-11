@@ -1,4 +1,4 @@
-from madhacks_2023.Database import Database
+from Database import Database
 
 database = Database()
 exampleDict = {
