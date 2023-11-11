@@ -21,8 +21,7 @@ def returnPeopleAtLocation(username):
         # if()
         # val=usersAtLocation(username)
         valDict = placeHolderSql.usersAtLocation(username, "LOC")
-        valDict["status"] = 200
-        val = json.dumps(valDict)
+        val = json.dumps({"data": valDict, "status": 200})
         return Response(val, status=200)
 
 
