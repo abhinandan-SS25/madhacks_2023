@@ -38,7 +38,7 @@ function Login() {
             navigate('/feed', {username:info.username});
         }
         else {
-          console.log(res)
+          console.log(res.status)
           setError(res.error);
         }
       })

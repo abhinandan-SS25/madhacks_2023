@@ -39,7 +39,7 @@ function Feed() {
                         setFeedData(res.data.map((e)=>{
                             <div className="feed_data">
                                 <div className="data_pic">
-                                    <img src={e.profile_picture} />
+                                    <img src={e.profilePicture} />
                                 </div>
                                 <div className="data_dets">
                                     <div className="data_name">

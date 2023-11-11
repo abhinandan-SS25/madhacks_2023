@@ -2,9 +2,9 @@ from flask import Flask, request, redirect, url_for, jsonify, Response
 from flask_cors import CORS
 import json
 import placeHolderSql
-import Database
+#import Database
 
-database = Database.Database()
+#database = Database.Database()
 app = Flask(__name__)
 CORS(app)
 
