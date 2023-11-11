@@ -32,8 +32,9 @@ def login():
         inputPassword = requestedData["password"]
         if inputPassword != "" and inputPassword != None:
             matchedRow = placeHolderSql.returnMatchedRow(inputUsername, inputPassword)
+            matchedRow["status"] = 200
             if matchedRow != None:
-                return jsonify(matchedRow)
+                return json(data=matchedRow,status=200)
     return Response(json.dumps({"error": "Incorrect username or password", "status":201}), status=201)
 
 
