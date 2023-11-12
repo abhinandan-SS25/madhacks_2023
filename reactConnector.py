@@ -31,7 +31,7 @@ def createExampleNames():
 }
     database.insertUser(exampleDict)
 
-
+createExampleNames()    
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
 def returnPeopleAtLocation(username):
     if request.method == "GET":
@@ -53,8 +53,9 @@ def register():
         inputUsername = requestedData["username"]
         inputPassword = requestedData["password"]
         inputConfirm = requestedData["confirm"]
+        database.insertUser(requestedData)
+        return Response(json.dumps({"error": "SUCCESS"}), status=200)
         
-        print(inputUsername + " " + inputPassword+" "+inputConfirm)
     return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
 
 
@@ -81,7 +82,8 @@ def login():
 def returnUsername(name):
     # getname
     # print(request.args.get("n"))
-    return str(database.getUser(name,None))
+    print(str(database.getUser(name,None)))
+    return database.getUser(name,None)
 
 
 if __name__ == "__main__":
