@@ -112,6 +112,9 @@ def createExampleNames():
         "username": "bubs",
         "password": "qwerty2@",
         "description": "bubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbub",
+        "city": "test",
+        "state": "test",
+        "country": "test",
     }
 
     database.insertUser(exampleDict1)
@@ -162,8 +165,9 @@ def returnPeopleAtLocation(username):
         val["data"] = tempVal
         val["status"] = 200
         del val["data"][0]["password"]
-        # val["trails"] = database.getPopularTrails(val["data"][0]["city"])
-        val["trails"] = placeHolderTrail
+        print(database.getPopularTrails("test"))
+        val["trails"] = database.getPopularTrails(val["data"][0]["city"])
+        # val["trails"] = placeHolderTrail
         return Response(json.dumps(val), status=200)
 
 
