@@ -37,7 +37,7 @@ function Feed() {
                         ]);
                     }
                     else if(res.status === 200) {
-                        setFeedData([res.data]);
+                        setFeedData(res.data);
                     }
                     else {
                         setFeedData([
