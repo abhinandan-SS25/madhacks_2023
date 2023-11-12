@@ -85,8 +85,12 @@ def returnPeopleAtLocation(username):
         return res
     if request.method == "GET":
         val = {}
-        val["data"] = database.usersNearby(username)
+        tempVal = database.usersNearby(username)
+        for i in range(len(tempVal)):
+            del tempVal[i]["_id"]
+        val["data"] = tempVal
         val["status"] = 200
+
         return Response(json.dumps(val), status=200)
 
 
@@ -379,6 +383,7 @@ def login():
 
     if request.method == "POST":
         requestedData = json.loads(request.data)
+
         inputUsername = requestedData["username"].strip()
         inputPassword = requestedData["password"].strip()
         if inputUsername == "" or inputPassword == "":
@@ -387,6 +392,7 @@ def login():
             matchedRow = database.getUser(inputUsername, inputPassword)
         if matchedRow != None:
             matchedRow["status"] = 200
+            del matchedRow["_id"]
             return Response(json.dumps(matchedRow), status=200)
     return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
 
@@ -394,8 +400,9 @@ def login():
 @app.route("/test/<name>")
 def returnUsername(name):
     # getname
-    print(str(database.getUser(name, None)))
-    return database.getUser(name, None)
+    val = database.getUser(name, None)
+    del val["_id"]
+    return val
 
 
 if __name__ == "__main__":
