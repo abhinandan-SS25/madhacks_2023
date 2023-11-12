@@ -37,7 +37,7 @@ function Feed() {
                         ]);
                     }
                     else if(res.status === 200) {
-                        setFeedData([...res.data]);
+                        setFeedData([res.data]);
                     }
                     else {
                         setFeedData([
@@ -76,7 +76,7 @@ function Feed() {
                     {e.ownerName}
                 </div>
                 <div className="data_desc">
-                    {e.dogsFavouriteActivities}
+                    {e["dogsFavoriteActivities"]}
                 </div>
             </div>
             <div className="data_contact">
@@ -90,7 +90,7 @@ function Feed() {
         </div>
     ));
 
-    console.log(data);
+    console.log(feedData);
 
     return (
         location.state === null || location.state.username === null?
