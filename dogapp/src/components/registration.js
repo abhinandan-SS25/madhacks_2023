@@ -36,7 +36,7 @@ function Registration({setUser}) {
       .then((res) => res.json())
       .then((res) => {
         if (res.status === 200) {
-            setUser({username:info.username, isAuthenticated:true});
+            setUser(res);
             navigate('/feed', {username:info.username});
         }
         else {

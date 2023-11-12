@@ -76,6 +76,19 @@ def createExampleNames():
 createExampleNames()
 
 
+@app.route("/save_shapes", methods=["POST", "OPTIONS"])
+def save_shapes():
+    # CORS
+    if request.method == "OPTIONS":
+        res = Response()
+        res.headers["X-Content-Type-Options"] = "*"
+        return res
+    if request.method == "POST":
+        requestedData = json.loads(request.data)
+        print(requestedData)
+        return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
+
+
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
 def returnPeopleAtLocation(username):
     # CORS
@@ -138,9 +151,9 @@ def register():
         elif database.getUser(inputUsername, None) != None:
             return Response(json.dumps({"error": "User already exists"}), status=203)
         else:
-            print(database.getUser(inputUsername, None))
             database.insertUser(requestedData)
-            return Response(json.dumps({"error": "SUCCESS"}), status=200)
+            requestedData["status"] = 200
+            return Response(json.dumps(requestedData), status=200)
 
     return Response(json.dumps({"error": "Neither Post nor Option"}), status=399)
 
