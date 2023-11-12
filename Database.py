@@ -199,12 +199,13 @@ class Database():
         try: userAddress = self.cur.fetchall()[0]
         #Try finding better error later
         except IndexError: return None
-        query = "select username "
+        query = "select username,city "
         query += "from userInfo,address on userInfo.addressID = address.id "
         query += f"where city = '{userAddress[1]}' and state = '{userAddress[2]}' and country = '{userAddress[3]}'"
         self.cur.execute(query)
         nearbyUsers = self.cur.fetchall()
         users = []
         for user in nearbyUsers:
-            self.getUser(user[0])
+            print(user)
+            users.append(self.getUser(user[0]))
         return users
