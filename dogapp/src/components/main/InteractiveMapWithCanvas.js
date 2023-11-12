@@ -7,55 +7,61 @@ import 'leaflet-draw';
 
 const MapWithDrawing = ({user}) => {
     const [drawnLayers, setDrawnLayers] = useState([]);
+    const [coord, setCoord] = useState({lat:0, long:0});
+    
     useEffect(() => {
-    // Initialize the map
-    const map = L.map('map').setView([22.493542555555557, 88.40330183333333], 25);
+    fetch(`https://nominatim.openstreetmap.org/search?q=${user.pincode}&format=json`).then(res=>res.json())
+    .then((res)=>{
+        console.log(res);
+        // Initialize the map
+        const map = L.map('map').setView([res[0].lat, res[0].lon], 25);
 
-    // Add a tile layer (you can choose a different tile provider)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-    }).addTo(map);
+        // Add a tile layer (you can choose a different tile provider)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        }).addTo(map);
 
-    // Initialize the Leaflet Draw control
-    const drawControl = new L.Control.Draw({
-        draw: {
-          polyline: {
-            allowIntersection: false, // if true, overlapping paths are allowed
-            shapeOptions: {
-              color: 'red', // outline color
-              fillOpacity: 1, // fill opacity (0 to 1)
-              weight: 10
+        // Initialize the Leaflet Draw control
+        const drawControl = new L.Control.Draw({
+            draw: {
+            polyline: {
+                allowIntersection: false, // if true, overlapping paths are allowed
+                shapeOptions: {
+                color: 'red', // outline color
+                fillOpacity: 1, // fill opacity (0 to 1)
+                weight: 10
+                },
             },
-          },
-          polygon: false,
-          circle: false,
-          circlemarker: false,
-        },
-        edit: {
-          featureGroup: new L.FeatureGroup(),
-          edit: {
-            selectedPathOptions: {
-              color: 'red', // outline color for selected path during editing
+            polygon: false,
+            circle: false,
+            circlemarker: false,
             },
-          },
-        },
-      });
+            edit: {
+            featureGroup: new L.FeatureGroup(),
+            edit: {
+                selectedPathOptions: {
+                color: 'red', // outline color for selected path during editing
+                },
+            },
+            },
+        });
 
-    map.addControl(drawControl);
+        map.addControl(drawControl);
 
-    // Event listener for when a shape is drawn on the map
-    map.on('draw:created', (e) => {
-        const layer = e.layer;
-        map.addLayer(layer);
-  
-        // Update the state with the drawn layers
-        setDrawnLayers([...drawnLayers, layer]);
-      });
-  
-      // Cleanup event listeners when the component unmounts
-      return () => {
-        map.off('draw:created');
-      };
+        // Event listener for when a shape is drawn on the map
+        map.on('draw:created', (e) => {
+            const layer = e.layer;
+            map.addLayer(layer);
+
+            // Update the state with the drawn layers
+            setDrawnLayers([...drawnLayers, layer]);
+        });
+
+        // Cleanup event listeners when the component unmounts
+        return () => {
+            map.off('draw:created');
+        };
+    })
     }, []);
 
     const handleSave = async () => {
