@@ -86,7 +86,8 @@ class Database:
             return "no users found"
         usersList = list(users)
         for i in usersList:
-            del i["_id", "password"]
+            del i["_id"]
+            del i["password"]
         return usersList
     
     def setProfilePicture(self, username, profilePicture):
@@ -111,22 +112,22 @@ class Database:
         if user == None:
             return "username Invalid"
         self.updateUser(username, {"trail": trail})
-        self.db2.trails.insert_one({"trail": trail, "username": username, "city": user["city"], "likes": 0, "onTrail": 0})
+        self.db2.trails.insert_one({"trail": trail, "id": username, "city": user["city"], "likes": 0, "onTrail": 0})
 
     def getTrail(self, username):
-        trail = self.db2.trails.find_one({"username": username})
+        trail = self.db2.trails.find_one({"id": username})
         if trail == None:
             return None
         del trail["_id"]
         return trail
 
     def likeTrail(self, username):
-        trailToLike = self.db2.trails.find_one({"username": username})
+        trailToLike = self.db2.trails.find_one({"id": username})
         like = {"$set": {"likes": trailToLike["likes"] + 1 } }
         self.db2.trails.update_one(trailToLike,like)
 
     def onTrail(self, trailuser, followingUser):
-        onTrail = self.db2.trails.find_one({"username": trailuser})
+        onTrail = self.db2.trails.find_one({"id": trailuser})
         addOnTrail = {"$set": {"onTrail": onTrail["onTrail"] + 1 } }
         self.db2.trails.update_one(onTrail,addOnTrail)
         user = self.db.users.find_one({"username": followingUser})
@@ -137,7 +138,7 @@ class Database:
         user = self.db.users.find_one({"username": followingUser})
         userUpdate = {"$set": {"isCurrentlyOnTrail": 0, "trailFollowing": None}}
         self.db.users.update_one(user,userUpdate)
-        offTrail = self.db2.trails.find_one({"username": trailuser})
+        offTrail = self.db2.trails.find_one({"id": trailuser})
         addOnTrail = {"$set": {"onTrail": offTrail["onTrail"] - 1 } }
         self.db2.trails.update_one(offTrail,addOnTrail)
 
