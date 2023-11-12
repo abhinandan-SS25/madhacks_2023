@@ -11,7 +11,7 @@ CORS(app)
 
 def createExampleNames():
     exampleDict1 = {
-        "userName": "arnav",
+        "username": "arnav",
         "phoneNum": "test",
         "verification": "test",
         "password": "qwerty2@",
@@ -31,51 +31,19 @@ def createExampleNames():
         "dogsFavoriteActivities": "test",
     }
     exampleDict2 = {
-        "userName": "vaibhu",
+        "username": "vaibhu",
         "phoneNum": "911",
         "password": "qwerty2@",
-        "description": "why",
-        "streetAddress": "everywhere",
-        "city": "heaven",
-        "state": "world",
-        "country": "mine",
-        "pincode": "1221",
-        "ownerName": "dubey",
-        "ownerDOB": "1111",
-        "ownerSex": "X",
-        "dogName": "vaibs",
-        "dogBreed": "a",
-        "dogDOB": "b",
-        "dogSex": "c",
+
         "dogsFavoriteActivities": ";)",
     }
     exampleDict3 = {
-        "userName": "arnav",
-        "phoneNum": "test",
-        "verification": "test",
-        "password": "qwerty2@",
-        "description": "test",
-        "streetAddress": "test",
-        "city": "test",
-        "state": "test",
-        "country": "test",
-        "pincode": "test",
-        "ownerName": "test",
-        "ownerDOB": "test",
-        "ownerSex": "test",
-        "dogName": "test",
-        "dogBreed": "test",
-        "dogDOB": "test",
-        "dogSex": "test",
-        "dogsFavoriteActivities": "test",
-    }
-    exampleDict3 = {
-        "userName": "nandi",
+        "username": "nandi",
         "password": "qwerty2@",
         "description": "test",
     }
     exampleDict4 = {
-        "userName": "bubs",
+        "username": "bubs",
         "password": "qwerty2@",
         "description": "bubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbub",
     }
