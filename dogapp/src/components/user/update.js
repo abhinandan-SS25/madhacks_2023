@@ -131,7 +131,7 @@ function Update(props) {
                   <label className='form_label'>
                     Username
                   </label>
-                  <input value={info.username} onChange={handleChange} type='text' name="username" className='flex_center form_input' />
+                  <input value={info.username} onChange={handleChange} type='text' name="username" className='flex_center form_input' disabled/>
                 </div>
                 <div>
                   <label className='form_label'>
