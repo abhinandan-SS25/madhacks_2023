@@ -147,16 +147,16 @@ class Database:
         popularTrails = []
         if len(trails) >= 3:
             maxLikedTrail1 = trails[0]
-            if trails[1]["likes"] > maxLikedTrail1:
+            if trails[1]["likes"] > maxLikedTrail1["likes"]:
                 maxLikedTrail2 = maxLikedTrail1
                 maxLikedTrail1 = trails[1]
             else:
                 maxLikedTrail2 = trails[1]
-            if trails[2]["likes"] > maxLikedTrail1:
+            if trails[2]["likes"] > maxLikedTrail1["likes"]:
                 maxLikedTrail3 = maxLikedTrail2
                 maxLikedTrail2 = maxLikedTrail1
                 maxLikedTrail1 = trails[2]
-            elif trails[2]["likes"] > maxLikedTrail2:
+            elif trails[2]["likes"] > maxLikedTrail2["likes"]:
                 maxLikedTrail3 = maxLikedTrail2
                 maxLikedTrail2 = trails[2]
             else:
@@ -175,7 +175,7 @@ class Database:
             popularTrails = [maxLikedTrail1, maxLikedTrail2, maxLikedTrail3]
         elif len(trails) == 2:
             maxLikedTrail1 = trails[0]
-            if trails[1]["likes"] > maxLikedTrail1:
+            if trails[1]["likes"] > maxLikedTrail1["likes"]:
                 maxLikedTrail2 = maxLikedTrail1
                 maxLikedTrail1 = trails[1]
             else:
