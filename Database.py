@@ -84,7 +84,7 @@ class Database:
         users = self.db.users.find({"city": user["city"], "state": user["state"]})
         usersList = list(users)
         for i in usersList:
-            del i["_id"]
+            del i["_id", "password"]
         return usersList
     
     def setProfilePicture(self, username, profilePicture):
