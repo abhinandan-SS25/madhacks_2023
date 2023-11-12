@@ -35,7 +35,7 @@ function Login() {
       .then((res) => {
         console.log(res)
         if (res.status === 200) {
-            navigate('/feed', {username:info.username});
+            navigate('/feed', {state:{username:info.username}});
         }
         else {
           console.log(res.status)

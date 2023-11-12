@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import "../../App.css";
 import { useLocation, useNavigate } from 'react-router-dom';
+import DrawableCanvas from "./trails";
 
 function Feed() {
-
     const location = useLocation();
     const history = useNavigate();
 
     const [feedData, setFeedData] = useState([]);
+    const [render, setRender] = useState(false);
 
     useEffect(()=> {
         if (location.state === null) {
@@ -112,7 +113,7 @@ function Feed() {
             <div>
                 <div>
                     <div className='flex_center'>
-                        <div className='flex_center left_div'>
+                        <div style={{justifyContent:"flex-start", height:"100vh"}} className='feed_left_div'>
                             <div className='feed_header'>
                                 Discover paws-ible friends
                             </div>
@@ -120,8 +121,10 @@ function Feed() {
                                 {[data]}
                             </div>
                         </div>
-                        <div className='flex_center right_div'>
-
+                        <div style={{justifyContent:"flex-start", height:"100vh"}} className='flex_center right_div'>
+                            <div className='feed_header'>
+                                Popular trails near you
+                            </div>
                         </div>
                     </div>
                     

@@ -23,7 +23,7 @@ def returnPeopleAtLocation(username):
         valDict = placeHolderSql.usersAtLocation(username, "LOC")
         print(valDict)
         val = json.dumps({"data": valDict, "status": 200})
-        return Response(val, status=300)
+        return Response(val, status=200)
 
 
 @app.route("/login", methods=["POST", "OPTIONS"])
