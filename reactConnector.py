@@ -26,27 +26,71 @@ dataFormat = {
     "dogsFavoriteActivities": "test",
 }
 
+placeHolderTrail = [
+    {
+        "trail": {
+            "coordinates": [
+                [88.40329706668854, 22.49435178996269],
+                [88.40484738349915, 22.494153713312638],
+            ],
+            "type": "Polygon",
+        },
+        "likes": 0,
+        "onTrail": 0,
+    },
+    {
+        "trail": {
+            "coordinates": [
+                [88.40118885040285, 22.49557405191004],
+                [88.41170310974123, 22.49636634867535],
+            ],
+            "type": "Polygon",
+        },
+        "likes": 2,
+        "onTrail": 1,
+    },
+    {
+        "trail": {
+            "coordinates": [
+                [88.46019744873048, 22.49630063972289],
+                [88.41522216796876, 22.470627905020283],
+            ],
+            "type": "Polygon",
+        },
+        "likes": 3,
+        "onTrail": 2,
+    },
+]
+
 
 def createExampleNames():
     exampleDict1 = {
-        "username": "arnav",
-        "phoneNum": "test",
-        "verification": "test",
-        "password": "qwerty2@",
-        "description": "test",
-        "streetAddress": "test",
         "city": "test",
-        "state": "test",
         "country": "test",
-        "pincode": "test",
-        "ownerName": "test",
-        "ownerDOB": "test",
-        "ownerSex": "test",
-        "dogName": "test",
+        "description": "test",
         "dogBreed": "test",
         "dogDOB": "test",
+        "dogName": "test",
         "dogSex": "test",
         "dogsFavoriteActivities": "test",
+        "ownerDOB": "test",
+        "ownerName": "test",
+        "ownerSex": "test",
+        "password": "qwerty2@",
+        "phoneNum": "test",
+        "pincode": "test",
+        "state": "test",
+        "streetAddress": "test",
+        "trail": {
+            "coordinates": [
+                [88.40329706668854, 22.49435178996269],
+                [88.40484738349915, 22.494153713312638],
+            ],
+            "type": "Polygon",
+        },
+        "trailLikes": 0,
+        "username": "arnav",
+        "verification": 0,
     }
     exampleDict2 = {
         "username": "vaibhu",
@@ -85,8 +129,8 @@ def save_shapes():
         return res
     if request.method == "POST":
         requestedData = json.loads(request.data)
-        database.setTrail(requestedData["username"].strip(),requestedData["data"][0])
-        return Response(json.dumps({"status":200}), status=200)
+        database.setTrail(requestedData["username"].strip(), requestedData["data"][0])
+        return Response(json.dumps({"status": 200}), status=200)
 
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
@@ -101,7 +145,7 @@ def returnPeopleAtLocation(username):
         tempVal = database.usersNearby(username)
         val["data"] = tempVal
         val["status"] = 200
-
+        val["trails"] = placeHolderTrail
         return Response(json.dumps(val), status=200)
 
 
