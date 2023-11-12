@@ -132,6 +132,18 @@ def save_shapes():
         database.setTrail(requestedData["username"].strip(), requestedData["data"][0])
         return Response(json.dumps({"status": 200}), status=200)
 
+@app.route("/trails/<username>", methods=["GET", "OPTIONS"])
+def returnSingleTrail(username):
+    # CORS
+    if request.method == "OPTIONS":
+        res = Response()
+        res.headers["X-Content-Type-Options"] = "*"
+        return res
+    if request.method == "GET":
+        val = {}
+        val["trail"] = placeHolderTrail[0]            
+        return Response(json.dumps(val), status=200)
+
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
 def returnPeopleAtLocation(username):
@@ -145,7 +157,9 @@ def returnPeopleAtLocation(username):
         tempVal = database.usersNearby(username)
         val["data"] = tempVal
         val["status"] = 200
-        val["trails"] = placeHolderTrail
+        del val["data"][0]["password"]
+        # val["trails"] = database.getPopularTrails(val["data"][0]["city"])
+        val["trails"] = placeHolderTrail()            
         return Response(json.dumps(val), status=200)
 
 
