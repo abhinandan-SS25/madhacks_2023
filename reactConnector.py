@@ -159,7 +159,7 @@ def returnPeopleAtLocation(username):
         val["status"] = 200
         del val["data"][0]["password"]
         # val["trails"] = database.getPopularTrails(val["data"][0]["city"])
-        val["trails"] = placeHolderTrail()            
+        val["trails"] = placeHolderTrail           
         return Response(json.dumps(val), status=200)
 
 

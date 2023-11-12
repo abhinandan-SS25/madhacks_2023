@@ -10,12 +10,14 @@ const ViewMap = () => {
 
   useEffect(() => {
     // Placeholder URL for fetching polyline data with the dynamic parameter
-    const placeholderUrl = `https://jsonplaceholder.typicode.com/posts/${username}/comments`;
+    const placeholderUrl = `https://localhost:5000/trails/${username}`;
 
     // Fetch polyline data from the placeholder URL
     const fetchPolylineData = async () => {
       try {
-        const response = await fetch(placeholderUrl);
+        const response = await fetch(placeholderUrl, {
+          method: 'GET'
+        });
         const data = await response.json();
 
         // Assuming your polyline data is in a 'coordinates' property
