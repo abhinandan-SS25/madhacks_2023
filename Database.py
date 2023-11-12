@@ -47,8 +47,7 @@ class Database:
             "city": city,
             "state": state,
             "country": country,
-            "pincode": pincode,
-            "profilePicture": profilePicture
+            "pincode": pincode
         }
 
         self.db.users.insert_one(user)
