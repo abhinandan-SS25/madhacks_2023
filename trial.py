@@ -19,7 +19,7 @@ exampleDict = {
     "dogBreed": "test",
     "dogDOB": "test",
     "dogSex": "test",
-    "dogsFavoriteActivities": "test",
+    "dogsFavoriteActivities": "test"
 }
 dict2 = {
     "username": "test2",
@@ -42,5 +42,9 @@ dict2 = {
     "dogsFavoriteActivities": "test2",
 }
 database.insertUser(exampleDict)
-database.insertUser(dict2)
-print(database.usersNearby("test"))
+print(database.getUser("test"))
+#database.insertUser(dict2)
+#print(database.usersNearby("test"))
+#print(database.getUser("test")["RandomVariable"])
+database.setTrail("test", ["list", "of", "trail"])
+print(database.getUser("test"))

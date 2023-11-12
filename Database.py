@@ -47,7 +47,8 @@ class Database:
             "city": city,
             "state": state,
             "country": country,
-            "pincode": pincode
+            "pincode": pincode,
+            "trail": None
         }
 
         self.db.users.insert_one(user)
@@ -56,10 +57,11 @@ class Database:
         user = self.db.users.find_one({"username": username})
         if user == None or (user["password"] != password and password != None):
             return None
+        del user["_id"]
         return user
     
     def verify(self, username):
-        if self.usernameFound(username):
+        if self.db.users.find_one({"username": username}) != None:
             self.db.users.update_one({"username": username}, { "$set": { "verification" : 1 } })
             return "Account Verified"
         return "Invalid username!"
@@ -74,15 +76,16 @@ class Database:
         user = self.getUser(username)
         if user == None:
             return "username Invalid"
-        usersNearby = []
         users = self.db.users.find({"city": user["city"], "state": user["state"]})
         usersList = list(users)
-        #print(list(users)[1])
         for i in usersList:
-            usersNearby.append(i)
-        return usersNearby
+            del i["_id"]
+        return usersList
     
     def setProfilePicture(self, username, profilePicture):
+        user = self.getUser(username)
+        if user == None:
+            return "username Invalid"
         picture = self.fs.put(profilePicture)
         self.updateUser(username, {"profilePicture": picture})
 
@@ -95,10 +98,11 @@ class Database:
             return picture
         else:
             return None
-
-    def usernameFound(self, username):
-        user = self.db.users.find_one({"username": username})
+    
+    def setTrail(self, username, trail):
+        user = self.getUser(username)
         if user == None:
-            return False
-        return True
+            return "username Invalid"
+        self.updateUser(username, {"trail": trail})
+
         
