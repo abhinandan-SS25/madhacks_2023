@@ -82,6 +82,8 @@ class Database:
         if user == None:
             return "username Invalid"
         users = self.db.users.find({"city": user["city"], "state": user["state"]})
+        if users == None:
+            return "no users found"
         usersList = list(users)
         for i in usersList:
             del i["_id", "password"]
