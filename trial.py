@@ -39,12 +39,9 @@ dict2 = {
     "dogBreed": "test2",
     "dogDOB": "test2",
     "dogSex": "test2",
-    "dogsFavoriteActivities": "test2",
+    "dogsFavoriteActivities": "test2"
 }
 database.insertUser(exampleDict)
-print(database.getUser("test"))
-#database.insertUser(dict2)
-#print(database.usersNearby("test"))
-#print(database.getUser("test")["RandomVariable"])
+database.insertUser(dict2)
 database.setTrail("test", ["list", "of", "trail"])
-print(database.getUser("test"))
+database.setTrail("test2", ["list", "of", "trail", "2"])
