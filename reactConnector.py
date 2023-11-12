@@ -37,6 +37,7 @@ placeHolderTrail = [
         },
         "likes": 0,
         "onTrail": 0,
+        "id": "John",
     },
     {
         "trail": {
@@ -48,6 +49,7 @@ placeHolderTrail = [
         },
         "likes": 2,
         "onTrail": 1,
+        "id": "Jatt",
     },
     {
         "trail": {
@@ -59,6 +61,7 @@ placeHolderTrail = [
         },
         "likes": 3,
         "onTrail": 2,
+        "id": "Julliette",
     },
 ]
 
@@ -132,6 +135,7 @@ def save_shapes():
         database.setTrail(requestedData["username"].strip(), requestedData["data"][0])
         return Response(json.dumps({"status": 200}), status=200)
 
+
 @app.route("/trails/<username>", methods=["GET", "OPTIONS"])
 def returnSingleTrail(username):
     # CORS
@@ -141,7 +145,7 @@ def returnSingleTrail(username):
         return res
     if request.method == "GET":
         val = {}
-        val["trail"] = placeHolderTrail[0]            
+        val["trail"] = placeHolderTrail[0]
         return Response(json.dumps(val), status=200)
 
 
@@ -159,7 +163,7 @@ def returnPeopleAtLocation(username):
         val["status"] = 200
         del val["data"][0]["password"]
         # val["trails"] = database.getPopularTrails(val["data"][0]["city"])
-        val["trails"] = placeHolderTrail()            
+        val["trails"] = placeHolderTrail
         return Response(json.dumps(val), status=200)
 
 
