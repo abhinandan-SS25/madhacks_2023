@@ -128,35 +128,35 @@ class Database:
         popularTrails = []
         if len(trails) >= 3:
             maxLikedTrail1 = trails[0]
-            if trails[1]["trailLikes"] > maxLikedTrail1:
+            if trails[1]["likes"] > maxLikedTrail1:
                 maxLikedTrail2 = maxLikedTrail1
                 maxLikedTrail1 = trails[1]
             else:
                 maxLikedTrail2 = trails[1]
-            if trails[2]["trailLikes"] > maxLikedTrail1:
+            if trails[2]["likes"] > maxLikedTrail1:
                 maxLikedTrail3 = maxLikedTrail2
                 maxLikedTrail2 = maxLikedTrail1
                 maxLikedTrail1 = trails[2]
-            elif trails[2]["trailLikes"] > maxLikedTrail2:
+            elif trails[2]["likes"] > maxLikedTrail2:
                 maxLikedTrail3 = maxLikedTrail2
                 maxLikedTrail2 = trails[2]
             else:
                 maxLikedTrail3 = trails[2]
             maxLikedTrail3 = trails[2]
             for i in range(3,len(trails)):
-                if trails[i]["trailLikes"] > maxLikedTrail1["trailLikes"]:
+                if trails[i]["likes"] > maxLikedTrail1["likes"]:
                     maxLikedTrail3 = maxLikedTrail2
                     maxLikedTrail2 = maxLikedTrail1
                     maxLikedTrail1 = trails[i]
-                elif trails[i]["trailLikes"] > maxLikedTrail2["trailLikes"]:
+                elif trails[i]["likes"] > maxLikedTrail2["likes"]:
                     maxLikedTrail3 = maxLikedTrail2
                     maxLikedTrail2 = trails[i]
-                elif trails[i]["trailLikes"] > maxLikedTrail3["trailLikes"]:
+                elif trails[i]["likes"] > maxLikedTrail3["likes"]:
                     maxLikedTrail3 = trails[i]
             popularTrails = [maxLikedTrail1, maxLikedTrail2, maxLikedTrail3]
         elif len(trails) == 2:
             maxLikedTrail1 = trails[0]
-            if trails[1]["trailLikes"] > maxLikedTrail1:
+            if trails[1]["likes"] > maxLikedTrail1:
                 maxLikedTrail2 = maxLikedTrail1
                 maxLikedTrail1 = trails[1]
             else:
