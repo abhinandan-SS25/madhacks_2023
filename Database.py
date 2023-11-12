@@ -2,7 +2,7 @@ import sqlite3
 
 class Database():
     def __init__(self):
-        self.conn = sqlite3.connect(f"myDatabase.sqlite",check_same_thread=False)
+        self.conn = sqlite3.connect("myDatabase.sqlite", check_same_thread=False)
         self.cur = self.conn.cursor() 
 
         # 0:userID, 1:username, 2:ownerID(foreignKey), 3:dogID(foreignKey), 
@@ -104,7 +104,6 @@ class Database():
     def insertUser(self, userValuesDict):
         username = userValuesDict.get("username")
         phoneNum = userValuesDict.get("phoneNum")
-        verification = userValuesDict.get("verification")
         password = userValuesDict.get("password")
         description = userValuesDict.get("description")
         streetAddress = userValuesDict.get("streetAddress")
@@ -147,17 +146,20 @@ class Database():
         try: ownerID = self.cur.fetchall()[0][0]
         except IndexError: return False
 
-        query = "insert into userInfo(username,ownerID,dogID,phoneNum,verification,addressID,password,description)"
-        query += f" values ('{username}','{ownerID}','{dogID}','{phoneNum}','{verification}','{addressID}','{password}','{description}')"
+        query = "insert into userInfo(userName,ownerID,dogID,phoneNum,verification,addressID,password,description)"
+        query += f" values ('{userName}','{ownerID}','{dogID}','{phoneNum}','{0}','{addressID}','{password}','{description}')"
         self.cur.executescript(query)
         self.cur.execute(f"select userID from userInfo where username = '{username}'")
         try: ownerID = self.cur.fetchall()[0][0]
         except IndexError: return False
         return True
     
-    def updateUser(self, username, updateDict):
-        userInfoHeaders = ["user"]
-        # 0:userID, 1:username, 2:ownerID(foreignKey), 3:dogID(foreignKey), 
-        # 4:phoneNum, 5:verification, 6:addressID(foreignKey),
-        # 7:password, 8:description
-        return
+    def verify(self, username):
+        self.cur.execute(f"select verification from userInfo where userName = '{username}'") 
+        try: isVerified = self.cur.fetchall()[0][0]
+        except IndexError: return "USER NOT FOUND!"
+        if isVerified == 1:
+             return "USER ALREADY VERIFIED!"
+        query = f"update  set verification = 1 where userName = '{username}'"
+        self.cur.executescript(query)
+        return "VERIFICATION SUCCESSFUL"

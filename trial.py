@@ -4,7 +4,7 @@ database = Database()
 exampleDict = {
     "userName": "test",
     "phoneNum": "test",
-    "verification": "test",
+    "verification": 0,
     "password": "test",
     "description": "test",
     "streetAddress": "test",
