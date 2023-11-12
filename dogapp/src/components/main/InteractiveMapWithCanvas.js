@@ -5,11 +5,11 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import 'leaflet-draw';
 
-const MapWithDrawing = () => {
+const MapWithDrawing = ({user}) => {
     const [drawnLayers, setDrawnLayers] = useState([]);
     useEffect(() => {
     // Initialize the map
-    const map = L.map('map').setView([51.505, -0.09], 13);
+    const map = L.map('map').setView([22.493542555555557, 88.40330183333333], 25);
 
     // Add a tile layer (you can choose a different tile provider)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -75,7 +75,7 @@ const MapWithDrawing = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(shapesData),
+            body: JSON.stringify({"data":shapesData, "username":user.username}),
           });
     
           /*if (!response.ok) {
