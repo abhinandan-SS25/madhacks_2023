@@ -1,7 +1,15 @@
 {
   "dependencies": {
+    "canvas": "^2.11.2",
     "create-react-app": "^5.0.1",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "leaflet": "^1.9.4",
+    "leaflet-routing-machine": "^3.2.12",
     "react": "^18.2.0",
-    "react-router-dom": "^6.18.0"
+    "react-leaflet": "^4.2.1",
+    "react-map-gl": "^7.1.6",
+    "react-router-dom": "^6.18.0",
+    "react-sketch": "^0.5.1"
   }
 }

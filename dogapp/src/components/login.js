@@ -31,14 +31,14 @@ function Login() {
         },
         body: JSON.stringify(info)
       })
-      .then((res)=>res.json())
+      .then((res) => res.json())
       .then((res) => {
         console.log(res)
         if (res.status === 200) {
-            navigate('/');
+            navigate('/feed', {state:{username:info.username}});
         }
         else {
-          console.log(res)
+          console.log(res.status)
           setError(res.error);
         }
       })
