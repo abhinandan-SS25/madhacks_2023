@@ -1,16 +1,16 @@
-# Bark Avenue 
+# Bark Buddy
 
-Our project is called **Bark Avenue**. It is a website dedicated to dogs and their owners. It connects dogs with each other based on proximity and interests. The website also allows dog owners to check out popular dog walking trails near them.
+Our project is called **Bark Buddy**. It is a website dedicated to dogs and their owners. It connects dogs with each other based on proximity and interests. The website also allows dog owners to check out popular dog walking trails near them.
 
-Bark Avenue truly is a paw-radise for man and dog alike.
+Bark Buddy truly is a paw-radise for man and dog alike.
 
 ## Users
 
 There are a millions of dog owners in this world, and one of the biggest problems dog owners is finding pals for their furry friends.
-This is where **Bark Avenue** comes in. The website helps in connecting both dogs and dog owners with each others.
+This is where **Bark Budddy** comes in. The website helps in connecting both dogs and dog owners with each others.
 In addition, cute dog photos can be found on every webpage.
 
-## Starting the Project
+## The UI
 
 ### Welcome Screen
 
@@ -38,9 +38,15 @@ The first part is a section to check out dogs near them, which are recommended f
 #### Pup-ular Paths
 
 The second path displays a list of the popular dog walking paths nearby.
-Each user can trace their own path on a map.
+Each user can trace their own path on a map. Users can also like different paths.
+
+## Technical Details
+
+The **backend** is written mostly in Python and connected with MongoDB for the databases deployed through MongoDB Atlas. 
+The **frontend** uses JavaScript, React, HTML, and CSS and it communicates with the backend as JSON modules.
+The **web program** is packaged up using docker deployed on GCP.
 
 ## Surprise
 
 Congrats on reaching the end of this file.
-One of the team members is a dog owner himself. Click this link for a dog pic.
+One of the team members is a dog owner himself. Look at the dog pic below
