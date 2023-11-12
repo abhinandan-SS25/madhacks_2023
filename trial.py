@@ -2,7 +2,7 @@ from Database import Database
 
 database = Database()
 exampleDict = {
-    "userName": "test",
+    "username": "test",
     "phoneNum": "test",
     "verification": 0,
     "password": "test",
