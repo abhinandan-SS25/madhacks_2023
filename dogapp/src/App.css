@@ -261,3 +261,12 @@ a {
   word-wrap:break-word;
   font-weight: 100;
 }
+
+.route_header {
+  font-size: 45px;
+}
+
+.route_data {
+  color: darkblue;
+  margin-bottom: 15px;
+}

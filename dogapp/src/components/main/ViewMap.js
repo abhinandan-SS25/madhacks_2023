@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useParams } from 'react-router-dom';
+import "../../App.css";
 
 const ViewMap = () => {
   const mapRef = useRef(null);
@@ -26,10 +27,10 @@ const ViewMap = () => {
 
   useEffect(() => {
     if (mapRef.current && trail) {
-      console.log(trail.trail.trail.coordinates[0][0])
-      const coordinates = trail.trail.trail.coordinates;
+      console.log(trail.center)
+      const coordinates = trail.trail.coordinates;
 
-      const map = L.map(mapRef.current).setView([coordinates[0][0], coordinates[0][1]], 13);
+      const map = L.map(mapRef.current).setView([trail.center.lat, trail.center.lon], 13);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
@@ -43,11 +44,36 @@ const ViewMap = () => {
       }
     }
   }, [trail]);
+  console.log(trail)
 
   return (
-  <div ref={mapRef} style={{ height: '400px' }}>
-    {console.log(trail)}
-  </div>);
+    <div className='flex_center'>
+      <div ref={mapRef} style={{ width: '60vw', height: "92vh" }}>
+      </div>
+      <div className='route flex_center' style={{flexDirection:"column", width: '40vw', height: "92vh" }}>
+        <div className='route_header'>
+          {trail && trail.id}
+        </div>
+        <div className='route_data'>
+          Route created by
+        </div>
+        <div className='route_header'>
+          {trail && trail.likes}
+        </div>
+        <div className='route_data'>
+          Users that liked the route
+        </div>
+        <div className='route_header'>
+          {trail && trail.onTrail}
+        </div>
+        <div className='route_data'>
+          Users that follow this route
+        </div>
+        <div className='button'>
+          <button className='form_button'>Like</button>
+        </div>
+      </div>
+    </div>);
 };
 
 export default ViewMap;
