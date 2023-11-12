@@ -21,5 +21,10 @@ exampleDict = {
     "dogSex": "test",
     "dogsFavoriteActivities": "test",
 }
-database.insertUser(exampleDict)
+example1 = {
+    "userName": "test",
+    "phoneNum": "test",
+}
+
+database.insertUser(example1)
 print(database.getUser("test","test"))

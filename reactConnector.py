@@ -8,6 +8,29 @@ database = Database.Database()
 app = Flask(__name__)
 CORS(app)
 
+def createExampleNames():
+    exampleDict = {
+    "userName": "test",
+    "phoneNum": "test",
+    "verification": "test",
+    "password": "test",
+    "description": "test",
+    "streetAddress": "test",
+    "city": "test",
+    "state": "test",
+    "country": "test",
+    "pincode": "test",
+    "ownerName": "test",
+    "ownerDOB": "test",
+    "ownerSex": "test",
+    "dogName": "test",
+    "dogBreed": "test",
+    "dogDOB": "test",
+    "dogSex": "test",
+    "dogsFavoriteActivities": "test",
+}
+    database.insertUser(exampleDict)
+
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
 def returnPeopleAtLocation(username):
@@ -16,6 +39,23 @@ def returnPeopleAtLocation(username):
         # val=usersAtLocation(username)
         val = placeHolderSql.usersAtLocation(username, "LOC")
         return jsonify(val)
+
+
+@app.route("/register", methods=["POST", "OPTIONS"])
+def register():
+    # CORS
+    if request.method == "OPTIONS":
+        res = Response()
+        res.headers["X-Content-Type-Options"] = "*"
+        return res
+    if request.method == "POST":
+        requestedData = json.loads(request.data)
+        inputUsername = requestedData["username"]
+        inputPassword = requestedData["password"]
+        inputConfirm = requestedData["confirm"]
+        
+        print(inputUsername + " " + inputPassword+" "+inputConfirm)
+    return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
 
 
 @app.route("/login", methods=["POST", "OPTIONS"])
@@ -41,7 +81,7 @@ def login():
 def returnUsername(name):
     # getname
     # print(request.args.get("n"))
-    return name
+    return str(database.getUser(name,None))
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ import sqlite3
 
 class Database():
     def __init__(self):
-        self.conn = sqlite3.connect(f"myDatabase.sqlite")
+        self.conn = sqlite3.connect(f"myDatabase.sqlite",check_same_thread=False)
         self.cur = self.conn.cursor() 
 
         # 0:userID, 1:userName, 2:ownerID(foreignKey), 3:dogID(foreignKey), 
