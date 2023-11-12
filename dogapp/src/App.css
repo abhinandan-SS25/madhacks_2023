@@ -110,3 +110,36 @@
   padding: 15px;
   text-align: center;
 }
+
+.feed_data {
+  width: 100%;
+  display: flex;
+}
+
+#data_img {
+  border-radius: 100px;
+  width: 150px;
+  height: 150px
+}
+
+.feed_data_list {
+  width: 50vw;
+}
+
+.data_dets  {
+  width: 60%;
+}
+
+.data_contact {
+  width: 20%;
+}
+
+.feed_header {
+  font-size: 30px;
+  font-weight: 800;
+  margin: 25px;
+}
+
+.data_name {
+  font-weight: 800;
+}

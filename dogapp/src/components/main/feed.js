@@ -37,7 +37,6 @@ function Feed() {
                     }
                     else if(res.status === 200) {
                         setFeedData([...res.data]);
-                        console.log(feedData);
                     }
                     else {
                         setFeedData([
@@ -66,6 +65,32 @@ function Feed() {
         
     }, [])
 
+    const data = feedData.map((e)=>(
+        <div className="feed_data flex_center">
+            <div className="data_pic">
+                <img id='data_img' src={e.profilePicture} />
+            </div>
+            <div className="data_dets">
+                <div className="data_name">
+                    {e.ownerName}
+                </div>
+                <div className="data_desc">
+                    {e.dogsFavouriteActivities}
+                </div>
+            </div>
+            <div className="data_contact">
+                <div className="contact_number">
+                    Phone Number
+                </div>
+                <div className="data_name">
+                    {e.phoneNum}
+                </div>
+            </div>
+        </div>
+    ));
+
+    console.log(data);
+
     return (
         location.state === null || location.state.username === null?
             <div>
@@ -92,26 +117,7 @@ function Feed() {
                                 Discover paws-ible friends
                             </div>
                             <div className='feed_data_list'>
-                                {feedData.map((e)=>{
-                                    <div className="feed_data">
-                                        <div className="data_pic">
-                                            <img src={e.profilePicture} />
-                                        </div>
-                                        <div className="data_dets">
-                                            <div className="data_name">
-                                                {e.ownerName}
-                                            </div>
-                                            <div className="data_desc">
-                                                {e.dogsFavoriteActivities}
-                                            </div>
-                                        </div>
-                                        <div className="data_contact">
-                                            <div className="contact_number">
-                                                {e.phoneNum}
-                                            </div>
-                                        </div>
-                                    </div>
-                            })}
+                                {[data]}
                             </div>
                         </div>
                         <div className='flex_center right_div'>
