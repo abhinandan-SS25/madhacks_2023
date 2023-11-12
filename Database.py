@@ -107,7 +107,7 @@ class Database:
         if user == None:
             return "username Invalid"
         self.updateUser(username, {"trail": trail})
-        self.db2.trails.insert_one({"trail": trail, "likes": 0, "onTrail": 0})
+        self.db2.trails.insert_one({"trail": trail, "username": username, "city": user["city"], "likes": 0, "onTrail": 0})
 
     def likeTrail(self, trail):
         trailToLike = self.db2.trails.find({"trail": trail})
@@ -120,8 +120,8 @@ class Database:
         addOnTrail = {"$set": {"onTrail": onTrail["onTrail"] + 1 } }
         self.db2.trails.update_one(trail,addOnTrail)
     
-    def getPopularTrails(self):
-        trails = list(self.db2.trails.find())
+    def getPopularTrails(self, city):
+        trails = list(self.db2.trails.find({"city": city}))
         maxLikedTrail1 = None
         maxLikedTrail2 = None
         maxLikedTrail3 = None
