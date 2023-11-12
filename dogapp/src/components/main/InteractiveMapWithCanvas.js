@@ -18,15 +18,28 @@ const MapWithDrawing = () => {
 
     // Initialize the Leaflet Draw control
     const drawControl = new L.Control.Draw({
-      draw: {
-        polygon: false,
-        circle: false,
-        circlemarker: false,
-      },
-      edit: {
-        featureGroup: new L.FeatureGroup(),
-      },
-    });
+        draw: {
+          polyline: {
+            allowIntersection: false, // if true, overlapping paths are allowed
+            shapeOptions: {
+              color: 'red', // outline color
+              fillOpacity: 1, // fill opacity (0 to 1)
+              weight: 10
+            },
+          },
+          polygon: false,
+          circle: false,
+          circlemarker: false,
+        },
+        edit: {
+          featureGroup: new L.FeatureGroup(),
+          edit: {
+            selectedPathOptions: {
+              color: 'red', // outline color for selected path during editing
+            },
+          },
+        },
+      });
 
     map.addControl(drawControl);
 
