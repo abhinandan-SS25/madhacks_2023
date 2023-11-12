@@ -193,14 +193,14 @@ class Database():
     
     def usersNearby(self, username):
         query = "select username,city,state,country "
-        query += "from userInfo,address on userInfo.addressID = address.id"
+        query += "from userInfo,address on userInfo.addressID = address.id "
         query += f"where username = '{username}'"
         self.cur.execute(query)
         try: userAddress = self.cur.fetchall()[0]
         #Try finding better error later
         except IndexError: return None
         query = "select username "
-        query += "from userInfo,address on userInfo.addressID = address.id"
+        query += "from userInfo,address on userInfo.addressID = address.id "
         query += f"where city = '{userAddress[1]}' and state = '{userAddress[2]}' and country = '{userAddress[3]}'"
         self.cur.execute(query)
         nearbyUsers = self.cur.fetchall()

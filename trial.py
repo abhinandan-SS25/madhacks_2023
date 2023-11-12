@@ -22,4 +22,4 @@ exampleDict = {
     "dogsFavoriteActivities": "test",
 }
 database.insertUser(exampleDict)
-print(database.getUser("test","test"))
+print(database.usersNearby("test"))
