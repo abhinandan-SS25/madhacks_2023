@@ -1,3 +1,7 @@
+* {
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -51,7 +55,8 @@
 }
 
 .top_left {
-  width: 75%;
+  width: 100%;
+  font-size: 25px;
 }
 
 .login, .register {
@@ -73,11 +78,15 @@
 }
 
 .form_input {
-  width: 40vw;
+  width: 25vw;
   padding: 10px;
   margin: 20px;
   font-size: 20px;
   border-radius: 10px;
+}
+
+#login_form {
+  margin-top: 100px;
 }
 
 .form_input_div {
@@ -86,15 +95,32 @@
 
 .form_label {
   position: relative;
+  display: block;
   top: 15px;
   left: 0;
+  font-size: 17px;
   margin-left: 15px;
   margin-top: -15px;
 }
 
 .form_header {
-  font-size: 45px;
+  font-size: 25px;
   font-weight: 800;
+  margin-left: 10px;
+}
+
+#login_dog {
+  background-image: url(../public//src/login.jpeg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 80%;
+}
+
+#register_dog {
+  background-image: url(../public//src/register.jpeg);
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
 }
 
 .form_button {
@@ -147,4 +173,48 @@
 
 .feed_left_div {
   width: 45vw;
+}
+
+.header {
+  font-size: 75px;
+  font-weight: 900;
+  margin-left: 150px;
+}
+
+.subheader{
+  font-size: 25px;
+  margin-left: 150px;
+}
+
+.home {
+  background-image: url(../public/src//index.jpeg);
+  background-size: 85%;
+  background-repeat: no-repeat;
+  background-position: 50% 80%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.lowbar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  padding: 80px;
+  padding-left: 0;
+  padding-bottom: 15px;
+}
+
+.bar {
+  display: flex;
+  border: 3px solid grey;
+  padding: 15px;
+  margin: 30px;
+  margin-bottom: 0;
+  font-size: 25px;
+  width: 250px;
+  border-radius: 15px;
+  color: black;
 }
