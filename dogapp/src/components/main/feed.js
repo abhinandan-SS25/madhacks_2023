@@ -72,18 +72,18 @@ function Feed({user, setUser}) {
     const data = feedData.map((e)=>(
         <div className="feed_data flex_center">
             <div className="data_pic">
-                <img id='data_img' src={e.profilePicture} />
+                <img id='data_img' src={"../../../public/src/rando.png"} />
             </div>
             <div className="data_dets">
                 <div className="data_name">
-                    {e.ownerName}
+                    {e.dogName}<span style={{position:"relative", display:"block", top:0, right:0, fontSize:"13px", marginTop:"10px", marginBottom:"10px"}} id='smaller'>{e.dogBreed}|{e.dogDOB}</span>
                 </div>
                 <div className="data_desc">
-                    {e["dogsFavoriteActivities"]}
+                    {e.description}
                 </div>
             </div>
             <div className="data_contact">
-                <div className="contact_number">
+                <div style={{color:"grey"}} className="contact_number">
                     Phone Number
                 </div>
                 <div className="data_name">
@@ -94,19 +94,19 @@ function Feed({user, setUser}) {
     ));
 
     const trails = feedTrails.map((e)=>(
-        <div className="feed_data flex_center">
-            <div className="data_pic">
-                Liked:{e.likes}
+        <div className="trail_data flex_center">
+            <div className="trail_name">
+                {e.id}'s trail
             </div>
-            <div className="data_dets">
-                <div className="data_name">
+            <div className="trail_stats">
+                <div className="trail_on">
                     On trails:{e.onTrail}
                 </div>
-                <div className="data_desc">
-                    {e.id}'s trail
+                <div className="trail_likes">
+                    Liked:{e.likes}
                 </div>
             </div>
-            <div className="data_contact">
+            <div className="trail_view">
                 <Link to={`/trails/view/${e.id}`}>
                     View
                 </Link>
@@ -115,29 +115,12 @@ function Feed({user, setUser}) {
     ));
 
     return (
-        location.state === null || location.state.username === null?
-            <div>
-                <div>
-                    <div className='flex_center'>
-                        <div className='flex_center left_div'>
-                            <div className='feed_header'>
-                                Login
-                            </div>
-                        </div>
-                        <div className='flex_center right_div'>
-
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            :
             <div>
                 <div>
                     <div className='flex_center'>
                         <div style={{justifyContent:"flex-start", height:"100vh"}} className='feed_left_div'>
                             <div className='feed_header'>
-                                Discover paws-ible friends
+                                Discover Pawsible Pals
                             </div>
                             <div className='feed_data_list'>
                                 {[data]}
@@ -145,7 +128,7 @@ function Feed({user, setUser}) {
                         </div>
                         <div style={{justifyContent:"flex-start", height:"100vh"}} className='flex_center right_div'>
                             <div className='feed_header'>
-                                Popular trails near you
+                                Pup-ular Paths near you
                             </div>
                             <div className='feed_data_list'>
                                 {[trails]}

@@ -218,3 +218,42 @@ a {
   border-radius: 15px;
   color: black;
 }
+
+.trail_data {
+  margin: 40px;
+  width: 45vw;
+  display: flex;
+  justify-content: flex-start;
+  padding: 20px;
+  font-size: 25px;
+  border: 2px solid grey;
+  border-radius: 10px;
+}
+
+.trail_name {
+  margin: 20px;
+  width:20vw;
+}
+
+.trail_stats {
+  width: 15vw;
+  color: grey;
+}
+
+.feed_data {
+  width: 40vw;
+  padding: 10px;
+  margin: 15px;
+}
+
+.data_dets {
+  padding: 15px;
+}
+
+.data_name {
+  font-size: 20px;
+}
+
+.data_desc {
+  word-wrap:break-word;
+}
