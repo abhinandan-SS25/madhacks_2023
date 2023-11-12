@@ -8,6 +8,25 @@ database = Database.Database()
 app = Flask(__name__)
 CORS(app)
 
+dataFormat = {
+            "username": "test",
+            "phoneNum": "test",
+            "verification": 0,
+            "description": "test",
+            "streetAddress": "test",
+            "city": "test",
+            "state": "test",
+            "country": "test",
+            "pincode": "test",
+            "ownerName": "test",
+            "ownerDOB": "test",
+            "ownerSex": "test",
+            "dogName": "test",
+            "dogBreed": "test",
+            "dogDOB": "test",
+            "dogSex": "test",
+            "dogsFavoriteActivities": "test",
+        }
 
 def createExampleNames():
     exampleDict1 = {
@@ -66,13 +85,10 @@ def returnPeopleAtLocation(username):
         res.headers["X-Content-Type-Options"] = "*"
         return res
     if request.method == "GET":
-        # if()
-        # val=usersAtLocation(username)
-        val={}
+        val = {}
         val["data"] = database.usersNearby(username)
-        val["status"]=200
-        print(val)
-        return Response(json.dumps(val),status=200)
+        val["status"] = 200
+        return Response(json.dumps(val), status=200)
 
 
 @app.route("/register", methods=["POST", "OPTIONS"])
@@ -128,6 +144,27 @@ def register():
     return Response(json.dumps({"error": "Neither Post nor Option"}), status=399)
 
 
+@app.route("/update/<name>", methods=["POST", "OPTIONS"])
+def profile():
+    # CORS
+    if request.method == "OPTIONS":
+        res = Response()
+        res.headers["X-Content-Type-Options"] = "*"
+        return res
+    if request.method == "POST":
+        requestedData = dict(json.loads(request.data))
+
+
+
+        if (requestedData["username"].strip()=="John"):
+            return Response(json.dumps({"error": "Fuck you"}), status=203)
+        else:
+            database.updateUser("ABC",requestedData)
+            return Response(json.dumps({"error": "SUCCESS"}), status=200)
+
+    return Response(json.dumps({"error": "Neither Post nor Option"}), status=399)
+
+
 @app.route("/login", methods=["POST", "OPTIONS"])
 def login():
     # CORS
@@ -145,8 +182,7 @@ def login():
         else:
             matchedRow = database.getUser(inputUsername, inputPassword)
         if matchedRow != None:
-            print("AAAA")
-            matchedRow["status"]=200
+            matchedRow["status"] = 200
             return Response(json.dumps(matchedRow), status=200)
     return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
 
@@ -154,7 +190,6 @@ def login():
 @app.route("/test/<name>")
 def returnUsername(name):
     # getname
-    # print(request.args.get("n"))
     print(str(database.getUser(name, None)))
     return database.getUser(name, None)
 
