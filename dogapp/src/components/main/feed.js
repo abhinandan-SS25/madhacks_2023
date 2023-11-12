@@ -8,7 +8,7 @@ function Feed({user, setUser}) {
     const history = useNavigate();
 
     const [feedData, setFeedData] = useState([]);
-    const [render, setRender] = useState(false);
+    const [feedTrails, setFeedTrails] = useState([]);
 
     useEffect(()=> {
         if (location.state === null && (user == null || user.username == "Guest")) {
@@ -39,6 +39,7 @@ function Feed({user, setUser}) {
                     }
                     else if(res.status === 200) {
                         setFeedData(res.data);
+                        setFeedTrails(res.trails);
                     }
                     else {
                         setFeedData([
@@ -91,7 +92,18 @@ function Feed({user, setUser}) {
         </div>
     ));
 
-    console.log(feedData);
+    const trails = feedTrails.map((e)=>(
+        <div className="feed_data flex_center">
+            <div className="data_pic">
+                <img id='data_img' src={e.profilePicture} />
+            </div>
+            <div className="data_dets">
+                <button>
+                    Follow
+                </button>
+            </div>
+        </div>
+    ));
 
     return (
         location.state === null || location.state.username === null?
