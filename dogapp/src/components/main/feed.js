@@ -3,6 +3,7 @@ import "../../App.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import DrawableCanvas from "./trails";
 import { Link } from 'react-router-dom';
+import Image from "./rando.png";
 
 function Feed({user, setUser}) {
     const location = useLocation();
@@ -72,11 +73,11 @@ function Feed({user, setUser}) {
     const data = feedData.map((e)=>(
         <div className="feed_data flex_center">
             <div className="data_pic">
-                <img id='data_img' src={"../../../public/src/rando.png"} />
+                {<img id="data_img" src={"https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg"}/>}
             </div>
             <div className="data_dets">
                 <div className="data_name">
-                    {e.dogName}<span style={{position:"relative", display:"block", top:0, right:0, fontSize:"13px", marginTop:"10px", marginBottom:"10px"}} id='smaller'>{e.dogBreed}|{e.dogDOB}</span>
+                    {e.dogName}({e.dogSex})<span style={{position:"relative", display:"block", top:0, right:0, fontSize:"13px", marginTop:"10px", marginBottom:"10px"}} id='smaller'>{e.dogBreed}|{e.dogDOB}</span>
                 </div>
                 <div className="data_desc">
                     {e.description}

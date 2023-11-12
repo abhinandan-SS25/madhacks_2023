@@ -44,31 +44,10 @@ const ViewMap = () => {
     }
   }, [trail]);
 
-  /*useEffect(() => {
-    if (trail) {
-      console.log(trail.trail.trail.coordinates[0][0], trail.trail.trail.coordinates[0][1])
-      // Initialize the map
-      const map = L.map(mapRef.current).setView([trail.trail.trail.coordinates[0][0], trail.trail.trail.coordinates[0][1]], 15);
-
-      // Add a tile layer (you can choose a different tile provider)
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-      }).addTo(map);
-
-      // Create a Leaflet polygon and add it to the map
-      const polygon = L.polygon(trail.coordinates, { color: 'blue' }).addTo(map);
-
-      // Add a popup with trail information
-      if (trail.info) {
-        polygon.bindPopup(trail.info).openPopup();
-      }
-
-      // Optionally, fit the map to the bounds of the polygon
-      map.fitBounds(polygon.getBounds());
-    }
-  }, [trail]);*/
-
-  return <div ref={mapRef} style={{ height: '400px' }} />;
+  return (
+  <div ref={mapRef} style={{ height: '400px' }}>
+    {console.log(trail)}
+  </div>);
 };
 
 export default ViewMap;

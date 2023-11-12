@@ -221,6 +221,7 @@ a {
 
 .trail_data {
   margin: 40px;
+  margin-top: 0px;
   width: 45vw;
   display: flex;
   justify-content: flex-start;
@@ -244,6 +245,8 @@ a {
   width: 40vw;
   padding: 10px;
   margin: 15px;
+  border: 2px solid grey;
+  border-radius: 10px;
 }
 
 .data_dets {
@@ -256,4 +259,5 @@ a {
 
 .data_desc {
   word-wrap:break-word;
+  font-weight: 100;
 }
