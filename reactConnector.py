@@ -60,12 +60,19 @@ createExampleNames()
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
 def returnPeopleAtLocation(username):
+    # CORS
+    if request.method == "OPTIONS":
+        res = Response()
+        res.headers["X-Content-Type-Options"] = "*"
+        return res
     if request.method == "GET":
         # if()
         # val=usersAtLocation(username)
-        val = database.usersNearby(username)
+        val={}
+        val["data"] = database.usersNearby(username)
+        val["status"]=200
         print(val)
-        return jsonify(val)
+        return Response(json.dumps(val),status=200)
 
 
 @app.route("/register", methods=["POST", "OPTIONS"])
@@ -138,7 +145,9 @@ def login():
         else:
             matchedRow = database.getUser(inputUsername, inputPassword)
         if matchedRow != None:
-            return Response(status=200)
+            print("AAAA")
+            matchedRow["status"]=200
+            return Response(json.dumps(matchedRow), status=200)
     return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
 
 
