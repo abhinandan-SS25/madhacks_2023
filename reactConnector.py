@@ -96,17 +96,25 @@ def createExampleNames():
         "verification": 0,
     }
     exampleDict2 = {
-        "username": "vaibhu",
-        "phoneNum": "911",
-        "password": "qwerty2@",
         "city": "test",
-        "state": "test",
         "country": "test",
-    }
-    exampleDict3 = {
-        "username": "nandi",
+        "description": "",
+        "dogBreed": "",
+        "dogDOB": "",
+        "dogName": "",
+        "dogSex": "",
+        "dogsFavoriteActivities": "",
+        "isCurrentlyOnTrail": 0,
+        "ownerDOB": "",
+        "ownerName": "Johnathan",
+        "ownerSex": "",
         "password": "qwerty2@",
-        "description": "test",
+        "phoneNum": "9110000000",
+        "pincode": "",
+        "state": "test",
+        "streetAddress": "",
+        "username": "vaibhu",
+        "verification": 0,
     }
     exampleDict4 = {
         "username": "bubs",
@@ -119,8 +127,37 @@ def createExampleNames():
 
     database.insertUser(exampleDict1)
     database.insertUser(exampleDict2)
-    database.insertUser(exampleDict3)
     database.insertUser(exampleDict4)
+    database.setTrail(
+        "arnav",
+        {
+            "coordinates": [
+                [88.40329706668854, 22.49435178996269],
+                [88.40484738349915, 22.494153713312638],
+            ],
+            "type": "Polygon",
+        },
+    )
+    database.setTrail(
+        "vaibhu",
+        {
+            "coordinates": [
+                [78.40329706668854, 22.49435178996269],
+                [78.40484738349915, 22.494153713312638],
+            ],
+            "type": "Polygon",
+        },
+    )
+    database.setTrail(
+        "bubs",
+        {
+            "coordinates": [
+                [68.40329706668854, 22.49435178996269],
+                [68.40484738349915, 22.494153713312638],
+            ],
+            "type": "Polygon",
+        },
+    )
 
 
 createExampleNames()
@@ -164,8 +201,6 @@ def returnPeopleAtLocation(username):
         tempVal = database.usersNearby(username)
         val["data"] = tempVal
         val["status"] = 200
-        del val["data"][0]["password"]
-        print(database.getPopularTrails("test"))
         val["trails"] = database.getPopularTrails(val["data"][0]["city"])
         # val["trails"] = placeHolderTrail
         return Response(json.dumps(val), status=200)
