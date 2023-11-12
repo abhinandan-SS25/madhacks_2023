@@ -1,1 +1,2 @@
 *.sqlite
+pymongo/__pycache__/

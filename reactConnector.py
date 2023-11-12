@@ -85,8 +85,8 @@ def save_shapes():
         return res
     if request.method == "POST":
         requestedData = json.loads(request.data)
-        print(requestedData)
-        return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
+        database.setTrail(requestedData["username"].strip(),requestedData["data"][0])
+        return Response(json.dumps({"status":200}), status=200)
 
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
