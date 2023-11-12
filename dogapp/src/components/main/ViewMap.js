@@ -44,7 +44,25 @@ const ViewMap = () => {
       }
     }
   }, [trail]);
-  console.log(trail)
+  
+  const handleLike = ()=>{
+    fetch("http://localhost:5000/routes/like", {
+      method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({"username": username})
+    })
+    .then(res=>res.json())
+    .then((res) => {
+      if (res.status === 200) {
+        setTrail({...trail, likes: trail.likes+1});
+      }
+      else {
+
+      }
+    })
+  }
 
   return (
     <div className='flex_center'>
@@ -70,7 +88,7 @@ const ViewMap = () => {
           Users that follow this route
         </div>
         <div className='button'>
-          <button className='form_button'>Like</button>
+          <button onChange={handleLike} className='form_button'>Like</button>
         </div>
       </div>
     </div>);
