@@ -10,11 +10,11 @@ CORS(app)
 
 
 def createExampleNames():
-    exampleDict = {
-        "userName": "test",
+    exampleDict1 = {
+        "userName": "arnav",
         "phoneNum": "test",
         "verification": "test",
-        "password": "test",
+        "password": "qwerty2@",
         "description": "test",
         "streetAddress": "test",
         "city": "test",
@@ -30,8 +30,64 @@ def createExampleNames():
         "dogSex": "test",
         "dogsFavoriteActivities": "test",
     }
-    database.insertUser(exampleDict)
-
+    exampleDict2 = {
+        "userName": "vaibhu",
+        "phoneNum": "911",
+        "password": "qwerty2@",
+        "description": "why",
+        "streetAddress": "everywhere",
+        "city": "heaven",
+        "state": "world",
+        "country": "mine",
+        "pincode": "1221",
+        "ownerName": "dubey",
+        "ownerDOB": "1111",
+        "ownerSex": "X",
+        "dogName": "vaibs",
+        "dogBreed": "a",
+        "dogDOB": "b",
+        "dogSex": "c",
+        "dogsFavoriteActivities": ";)",
+    }
+    exampleDict3 = {
+        "userName": "arnav",
+        "phoneNum": "test",
+        "verification": "test",
+        "password": "qwerty2@",
+        "description": "test",
+        "streetAddress": "test",
+        "city": "test",
+        "state": "test",
+        "country": "test",
+        "pincode": "test",
+        "ownerName": "test",
+        "ownerDOB": "test",
+        "ownerSex": "test",
+        "dogName": "test",
+        "dogBreed": "test",
+        "dogDOB": "test",
+        "dogSex": "test",
+        "dogsFavoriteActivities": "test",
+    }
+    exampleDict3 = {
+        "userName": "nandi",
+        "password": "qwerty2@",
+        "description": "test",
+    }
+    exampleDict4 = {
+        "userName": "bubs",
+        "password": "qwerty2@",
+        "description": "bubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbub",
+    }
+    
+    
+    database.insertUser(exampleDict1)
+    database.insertUser(exampleDict2)
+    database.insertUser(exampleDict3)
+    database.insertUser(exampleDict4)
+    
+    
+    
 
 createExampleNames()
 
