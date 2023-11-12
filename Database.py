@@ -161,7 +161,6 @@ class Database:
                 maxLikedTrail2 = trails[2]
             else:
                 maxLikedTrail3 = trails[2]
-            maxLikedTrail3 = trails[2]
             for i in range(3,len(trails)):
                 if trails[i]["likes"] > maxLikedTrail1["likes"]:
                     maxLikedTrail3 = maxLikedTrail2
