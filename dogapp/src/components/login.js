@@ -78,7 +78,7 @@ function Login({setUser}) {
                 <label className='form_label'>
                   Password
                 </label>
-                <input value={info.password} onChange={handleChange} type='text' name="password" className='flex_center form_input' />
+                <input value={info.password} onChange={handleChange} type='password' name="password" className='flex_center form_input' />
               </div>
             </div>
             <div className='form_footer flex_center'>

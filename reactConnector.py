@@ -6,6 +6,27 @@ database = Database.Database()
 app = Flask(__name__)
 CORS(app)
 
+def defaultValues():
+    defaultDict = {
+        "username": "root",
+        "password": "root",
+    }
+    
+    database.insertUser(defaultDict)
+
+    database.setTrail(
+        "root",
+        {
+            "coordinates": [
+                [0, 0],
+                [0, 0],
+            ],
+            "type": "Polygon",
+        },
+        {"lat": "0", "lon": "0"},
+    )
+
+
 
 def createExampleNames():
     exampleDict1 = {
@@ -29,7 +50,6 @@ def createExampleNames():
         "username": "john",
         "verification": 0,
     }
-
     exampleDict2 = {
         "city": "Madison",
         "country": "USA",
@@ -111,40 +131,7 @@ def createExampleNames():
         {"lat": "43.2573529", "lon": "-79.8675813"},
     )
 
-    database.setTrail(
-        "arnav",
-        {
-            "coordinates": [
-                [88.40329706668854, 22.49435178996269],
-                [88.40484738349915, 22.494153713312638],
-            ],
-            "type": "Polygon",
-        },
-        {"lat": "43.2573529", "lon": "-79.8675813"},
-    )
-    database.setTrail(
-        "vaibhu",
-        {
-            "coordinates": [
-                [78.40329706668854, 22.49435178996269],
-                [78.40484738349915, 22.494153713312638],
-            ],
-            "type": "Polygon",
-        },
-        {"lat": "43.2573529", "lon": "-79.8675813"},
-    )
-    database.setTrail(
-        "bubs",
-        {
-            "coordinates": [
-                [68.40329706668854, 22.49435178996269],
-                [68.40484738349915, 22.494153713312638],
-            ],
-            "type": "Polygon",
-        },
-        {"lat": "43.2573529", "lon": "-79.8675813"},
-    )
-
+defaultValues()
 
 createExampleNames()
 
@@ -158,7 +145,6 @@ def save_shapes():
         return res
     if request.method == "POST":
         requestedData = json.loads(request.data)
-        print(requestedData)
         database.setTrail(
             requestedData["username"].strip(),
             requestedData["data"][0],
@@ -175,7 +161,8 @@ def returnSingleTrail(username):
         res.headers["X-Content-Type-Options"] = "*"
         return res
     if request.method == "GET":
-        return Response(json.dumps(database.getTrail(username)), status=200)
+        returnedTrail=database.getTrail(username)
+        return Response(json.dumps(returnedTrail), status=200)
 
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
@@ -190,6 +177,7 @@ def returnPeopleAtLocation(username):
         tempVal = database.usersNearby(username)
         val["data"] = tempVal
         val["status"] = 200
+        print(database.getPopularTrails(val["data"][0]["city"]))
         val["trails"] = database.getPopularTrails(val["data"][0]["city"])
         return Response(json.dumps(val), status=200)
 
