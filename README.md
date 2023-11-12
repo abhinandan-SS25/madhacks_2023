@@ -49,4 +49,3 @@ The **web program** is packaged up using docker deployed on GCP.
 ## Surprise
 
 Congrats on reaching the end of this file.
-One of the team members is a dog owner himself. Look at the dog pic below
