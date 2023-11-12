@@ -52,19 +52,25 @@ function Login({setUser}) {
 
     return (
       <div className='flex_center'>
-        <div className='flex_center left_div'>
-          LOGIN
+        <div id="login_dog" className='flex_center left_div'>
+          
         </div>
         <div className='flex_center right_div'>
+          <div style={{fontSize:80}}>
+            <div style={{fontSize: 30}} id="smaller">
+                Welcome back
+              </div>
+               to the Bark Side
+          </div>
           <form id="login_form">
-            <div className='form_header flex_center'>
-              Log in
+            <div className='form_header'>
+              Log in to your account
             </div>
             <div className='error'>{error?error: " "}</div>
             <div className='flex_center form_input_div'>
               <div>
                 <label className='form_label'>
-                  Doggo Username
+                  Username
                 </label>
                 <input value={info.username} onChange={handleChange} type='text' name="username" className='flex_center form_input' />
               </div>
