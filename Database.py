@@ -48,7 +48,8 @@ class Database:
             "state": state,
             "country": country,
             "pincode": pincode,
-            "trail": None
+            "trail": None,
+            "trailLikes": None
         }
 
         self.db.users.insert_one(user)
@@ -61,10 +62,11 @@ class Database:
         return user
     
     def verify(self, username):
-        if self.db.users.find_one({"username": username}) != None:
-            self.db.users.update_one({"username": username}, { "$set": { "verification" : 1 } })
-            return "Account Verified"
-        return "Invalid username!"
+        user = self.getUser(username)
+        if user == None:
+            return "username Invalid"
+        self.db.users.update_one(user, { "$set": { "verification" : 1 } })
+        return "Account Verified"
 
     def updateUser(self, username, updateDict):
         user = self.getUser(username)
@@ -103,6 +105,12 @@ class Database:
         user = self.getUser(username)
         if user == None:
             return "username Invalid"
-        self.updateUser(username, {"trail": trail})
+        self.updateUser(username, {"trail": trail, "trailLikes": 0})
+
+    def likeTrail(self, username):
+        user = self.getUser(username)
+        if user == None:
+            return "username Invalid"
+        self.db.users.update_one(user, {"$set": user["trailLikes"]+1 })
 
         
