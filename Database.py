@@ -50,7 +50,9 @@ class Database:
             "state": state,
             "country": country,
             "pincode": pincode,
-            "trail": None
+            "trail": None,
+            "isCurrentlyOnTrail": 0,
+            "trailFollowing": None
         }
 
         self.db.users.insert_one(user)
@@ -109,17 +111,34 @@ class Database:
         self.updateUser(username, {"trail": trail})
         self.db2.trails.insert_one({"trail": trail, "username": username, "city": user["city"], "likes": 0, "onTrail": 0})
 
-    def likeTrail(self, trail):
-        trailToLike = self.db2.trails.find({"trail": trail})
-        like = {"$set": {"likes": trailToLike["likes"] + 1 } }
-        self.db2.trails.update_one(trail,like)
+    def getTrail(self, username):
+        trail = self.db2.trails.find_one({"username": username})
+        if trail == None:
+            return None
+        del trail["_id"]
+        return trail
 
-    def onTrail(self, trail):
-        addOnTrail = {"$set": {"onTrail": "onTrail"+1 } }
-        onTrail = self.db2.trails.find({"trail": trail})
+    def likeTrail(self, username):
+        trailToLike = self.db2.trails.find_one({"username": username})
+        like = {"$set": {"likes": trailToLike["likes"] + 1 } }
+        self.db2.trails.update_one(trailToLike,like)
+
+    def onTrail(self, trailuser, followingUser):
+        onTrail = self.db2.trails.find_one({"username": trailuser})
         addOnTrail = {"$set": {"onTrail": onTrail["onTrail"] + 1 } }
-        self.db2.trails.update_one(trail,addOnTrail)
+        self.db2.trails.update_one(onTrail,addOnTrail)
+        user = self.db.users.find_one({"username": followingUser})
+        userUpdate = {"$set": {"isCurrentlyOnTrail": 1, "trailFollowing": onTrail["trail"]}}
+        self.db.users.update_one(user,userUpdate)
     
+    def offTrail(self, trailuser, followingUser):
+        user = self.db.users.find_one({"username": followingUser})
+        userUpdate = {"$set": {"isCurrentlyOnTrail": 0, "trailFollowing": None}}
+        self.db.users.update_one(user,userUpdate)
+        offTrail = self.db2.trails.find_one({"username": trailuser})
+        addOnTrail = {"$set": {"onTrail": offTrail["onTrail"] - 1 } }
+        self.db2.trails.update_one(offTrail,addOnTrail)
+
     def getPopularTrails(self, city):
         trails = list(self.db2.trails.find({"city": city}))
         maxLikedTrail1 = None
