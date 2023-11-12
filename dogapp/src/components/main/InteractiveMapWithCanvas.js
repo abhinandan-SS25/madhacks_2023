@@ -1,5 +1,5 @@
 // MapWithDrawing.js
-import React, { useEffect , useState} from 'react';
+import React, { useEffect, useRef , useState} from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -8,11 +8,15 @@ import 'leaflet-draw';
 const MapWithDrawing = ({user}) => {
     const [drawnLayers, setDrawnLayers] = useState([]);
     const [coord, setCoord] = useState({lat:0, long:0});
-    
+    const [currentCenter, setCurrentCenter] = useState({ lat: 0, lon: 0 });
+
     useEffect(() => {
     fetch(`https://nominatim.openstreetmap.org/search?q=${user.pincode}&format=json`).then(res=>res.json())
     .then((res)=>{
-        console.log(res);
+        setCurrentCenter({
+          lat:res[0].lat,
+          lon:res[0].lon
+        });
         // Initialize the map
         const map = L.map('map').setView([res[0].lat, res[0].lon], 25);
 
@@ -57,6 +61,15 @@ const MapWithDrawing = ({user}) => {
             setDrawnLayers([...drawnLayers, layer]);
         });
 
+        // Event listener for when the map is moved
+        map.on('moveend', () => {
+          console.log(map.getCenter())
+          setCurrentCenter({
+            lat:currentCenter.lat+map.getCenter().lat,
+            lon:currentCenter.lon+map.getCenter().lng,
+          });
+        });
+
         // Cleanup event listeners when the component unmounts
         return () => {
             map.off('draw:created');
@@ -76,12 +89,12 @@ const MapWithDrawing = ({user}) => {
           });
     
           // Send the shapesData to the backend using fetch
-          const response = await fetch('http://your-backend-url/save_shapes', {
+          const response = await fetch('http://localhost:5000/save_shapes', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({"data":shapesData, "username":user.username}),
+            body: JSON.stringify({"data":shapesData, "center":currentCenter,  "username":user.username}),
           });
     
           /*if (!response.ok) {
