@@ -2,28 +2,28 @@ import "../../App.css";
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function Update() {
+function Update(props) {
     const navigate = useNavigate();
-
+    const user = props.user;
 
     const [info, setInfo] = useState(
         {
-          username: "",
-          phoneNum: "",
-          description: "",
-          streetAddress: "",
-          city: "",
-          state: "",
-          country: "",
-          pincode: "",
-          ownerName: "",
-          ownerDOB: "",
-          ownerSex: "",
-          dogName: "",
-          dogBreed: "",
-          dogDOB: "",
-          dogSex: "",
-          dogsFavoriteActivities: "",
+          username: user.username? user.username: "",
+          phoneNum: user.phoneNum? user.phoneNum: "",
+          description: user.description? user.description: "",
+          streetAddress: user.streetAddress? user.streetAddress: "",
+          city: user.city? user.city: "",
+          state: user.state? user.state: "",
+          country: user.country? user.country: "",
+          pincode: user.pincode? user.pincode: "",
+          ownerName: user.ownerName? user.ownerName: "",
+          ownerDOB: user.ownerDOB? user.ownerDOB: "",
+          ownerSex: user.ownerSex? user.ownerSex: "",
+          dogName: user.dogName? user.dogName: "",
+          dogBreed: user.dogBreed? user.dogBreed: "",
+          dogDOB: user.dogDOB? user.dogDOB: "",
+          dogSex: user.dogSex? user.dogSex: "",
+          dogsFavoriteActivities: user.dogsFavoriteActivities? user.dogsFavoriteActivities: "",
         }
       )
   

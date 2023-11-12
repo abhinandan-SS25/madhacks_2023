@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "../App.css";
 import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({setUser}) {
     const navigate = useNavigate();
 
     const [info, setInfo] = useState(
@@ -33,8 +33,10 @@ function Login() {
       })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
         if (res.status === 200) {
+          console.log(res)
+
+            setUser(res);
             navigate('/feed', {state:{username:info.username}});
         }
         else {
@@ -43,6 +45,7 @@ function Login() {
         }
       })
       .catch((error) => {
+        console.log(error)
         setError("There was an issue logging in.");
       })
     }

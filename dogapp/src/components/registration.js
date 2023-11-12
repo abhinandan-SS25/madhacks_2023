@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "../App.css";
 import { useNavigate } from 'react-router-dom';
 
-function Registration() {
+function Registration({setUser}) {
 
   const navigate = useNavigate();
 
@@ -36,6 +36,7 @@ function Registration() {
       .then((res) => res.json())
       .then((res) => {
         if (res.status === 200) {
+            setUser({username:info.username, isAuthenticated:true});
             navigate('/feed', {username:info.username});
         }
         else {

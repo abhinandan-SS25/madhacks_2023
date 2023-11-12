@@ -3,7 +3,7 @@ import "../../App.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import DrawableCanvas from "./trails";
 
-function Feed() {
+function Feed({user, setUser}) {
     const location = useLocation();
     const history = useNavigate();
 
@@ -11,11 +11,12 @@ function Feed() {
     const [render, setRender] = useState(false);
 
     useEffect(()=> {
-        if (location.state === null) {
+        if (location.state === null && (user == null || user.username == "Guest")) {
             history("/login");
         }
         try {
-            fetch(`http://localhost:5000/feed/${location.state.username}`, {
+            const url = location.state != null? `http://localhost:5000/feed/${location.state.username}`: `http://localhost:5000/feed/${user.username}`;
+            fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
