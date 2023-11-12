@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../../App.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import DrawableCanvas from "./trails";
+import { Link } from 'react-router-dom';
 
 function Feed({user, setUser}) {
     const location = useLocation();
@@ -95,12 +96,20 @@ function Feed({user, setUser}) {
     const trails = feedTrails.map((e)=>(
         <div className="feed_data flex_center">
             <div className="data_pic">
-                <img id='data_img' src={e.profilePicture} />
+                Liked:{e.likes}
             </div>
             <div className="data_dets">
-                <button>
-                    Follow
-                </button>
+                <div className="data_name">
+                    On trails:{e.onTrail}
+                </div>
+                <div className="data_desc">
+                    {e.id}'s trail
+                </div>
+            </div>
+            <div className="data_contact">
+                <Link to={`/trails/view/${e.id}`}>
+                    View
+                </Link>
             </div>
         </div>
     ));
@@ -137,6 +146,9 @@ function Feed({user, setUser}) {
                         <div style={{justifyContent:"flex-start", height:"100vh"}} className='flex_center right_div'>
                             <div className='feed_header'>
                                 Popular trails near you
+                            </div>
+                            <div className='feed_data_list'>
+                                {[trails]}
                             </div>
                         </div>
                     </div>
