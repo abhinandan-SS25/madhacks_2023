@@ -86,6 +86,16 @@ class Database:
         picture = self.fs.put(profilePicture)
         self.updateUser(username, {"profilePicture": picture})
 
+    def getProfilePicture(self, username):
+        user = self.getUser(username)
+        if user == None:
+            return None
+        if "profilePicture" in user.keys():
+            picture = self.fs.get(user["profilePicture"]).read()
+            return picture
+        else:
+            return None
+
     def usernameFound(self, username):
         user = self.db.users.find_one({"username": username})
         if user == None:
