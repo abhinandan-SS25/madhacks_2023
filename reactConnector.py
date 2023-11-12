@@ -29,7 +29,10 @@ dataFormat = {
 placeHolderTrail = [
     {
         "trail": {
-            "coordinates":[[50.68553101440053,33.98150040391408],[50.68666247718096,33.980361724824085],[50.68749364652203,33.98103336941365],[50.68658204143829,33.98156712291896],[50.68564362444027,33.98154933118945]],
+            "coordinates": [
+                [88.40329706668854, 22.49435178996269],
+                [88.40484738349915, 22.494153713312638],
+            ],
             "type": "Polygon",
         },
         "likes": 0,
@@ -82,7 +85,10 @@ def createExampleNames():
         "state": "test",
         "streetAddress": "test",
         "trail": {
-            "coordinates":[[50.68553101440053,33.98150040391408],[50.68666247718096,33.980361724824085],[50.68749364652203,33.98103336941365],[50.68658204143829,33.98156712291896],[50.68564362444027,33.98154933118945]],
+            "coordinates": [
+                [88.40329706668854, 22.49435178996269],
+                [88.40484738349915, 22.494153713312638],
+            ],
             "type": "Polygon",
         },
         "trailLikes": 0,
@@ -90,28 +96,72 @@ def createExampleNames():
         "verification": 0,
     }
     exampleDict2 = {
-        "username": "vaibhu",
-        "phoneNum": "911",
-        "password": "qwerty2@",
         "city": "test",
-        "state": "test",
         "country": "test",
-    }
-    exampleDict3 = {
-        "username": "nandi",
+        "description": "",
+        "dogBreed": "",
+        "dogDOB": "",
+        "dogName": "",
+        "dogSex": "",
+        "dogsFavoriteActivities": "",
+        "isCurrentlyOnTrail": 0,
+        "ownerDOB": "",
+        "ownerName": "Johnathan",
+        "ownerSex": "",
         "password": "qwerty2@",
-        "description": "test",
+        "phoneNum": "9110000000",
+        "pincode": "",
+        "state": "test",
+        "streetAddress": "",
+        "username": "vaibhu",
+        "verification": 0,
     }
     exampleDict4 = {
         "username": "bubs",
         "password": "qwerty2@",
         "description": "bubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbub",
+        "city": "test",
+        "state": "test",
+        "country": "test",
     }
 
     database.insertUser(exampleDict1)
     database.insertUser(exampleDict2)
-    database.insertUser(exampleDict3)
     database.insertUser(exampleDict4)
+
+    database.setTrail(
+        "arnav",
+        {
+            "coordinates": [
+                [88.40329706668854, 22.49435178996269],
+                [88.40484738349915, 22.494153713312638],
+            ],
+            "type": "Polygon",
+        },
+        {"lat": "43.2573529", "lon": "-79.8675813"},
+    )
+    database.setTrail(
+        "vaibhu",
+        {
+            "coordinates": [
+                [78.40329706668854, 22.49435178996269],
+                [78.40484738349915, 22.494153713312638],
+            ],
+            "type": "Polygon",
+        },
+        {"lat": "43.2573529", "lon": "-79.8675813"},
+    )
+    database.setTrail(
+        "bubs",
+        {
+            "coordinates": [
+                [68.40329706668854, 22.49435178996269],
+                [68.40484738349915, 22.494153713312638],
+            ],
+            "type": "Polygon",
+        },
+        {"lat": "43.2573529", "lon": "-79.8675813"},
+    )
 
 
 createExampleNames()
@@ -126,7 +176,12 @@ def save_shapes():
         return res
     if request.method == "POST":
         requestedData = json.loads(request.data)
-        database.setTrail(requestedData["username"].strip(), requestedData["data"][0])
+        print(requestedData)
+        database.setTrail(
+            requestedData["username"].strip(),
+            requestedData["data"][0],
+            requestedData["center"],
+        )
         return Response(json.dumps({"status": 200}), status=200)
 
 
@@ -138,10 +193,7 @@ def returnSingleTrail(username):
         res.headers["X-Content-Type-Options"] = "*"
         return res
     if request.method == "GET":
-        val = {}
-        print("A")
-        val["trail"] = placeHolderTrail[0]
-        return Response(json.dumps(val), status=200)
+        return Response(json.dumps(database.getTrail(username)), status=200)
 
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
@@ -156,9 +208,8 @@ def returnPeopleAtLocation(username):
         tempVal = database.usersNearby(username)
         val["data"] = tempVal
         val["status"] = 200
-        del val["data"][0]["password"]
-        # val["trails"] = database.getPopularTrails(val["data"][0]["city"])
-        val["trails"] = placeHolderTrail
+        val["trails"] = database.getPopularTrails(val["data"][0]["city"])
+        # val["trails"] = placeHolderTrail
         return Response(json.dumps(val), status=200)
 
 
