@@ -109,13 +109,13 @@ const MapWithDrawing = ({user}) => {
 
   return (
     <div>
-        <div style={{ height: '10vh', fontWeight: "900", fontSize:35 }} className='trailheader'>
+        <div style={{ height: '10vh', fontWeight: "900", fontSize:35 }} className='trailheader flex_center'>
             Design your own trail.
         </div>
         <div id="map" style={{ height: '70vh' }}>
         </div>
-        <div className='save_trail'>
-            <button onClick={handleSave} id='save_trail'>Save Trail</button>
+        <div className='save_trail flex_center'>
+            <button onClick={handleSave} className='form_button' id='save_trail'>Save Trail</button>
         </div>
     </div>
   );

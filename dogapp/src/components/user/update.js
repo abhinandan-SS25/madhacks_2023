@@ -6,6 +6,11 @@ function Update(props) {
     const navigate = useNavigate();
     const user = props.user;
 
+    console.log(user)
+    if (user == null || user.authenticated == false || user.username == "Guest" || user.username == null) {
+        navigate("/login");
+    }
+
     const [info, setInfo] = useState(
         {
           username: user.username? user.username: "",
@@ -63,7 +68,12 @@ function Update(props) {
       }
 
     return (
-        <div className='flex_center'>
+    <div>
+      <div style={{ height: '10vh', fontWeight: "900", fontSize:35 }} className='trailheader flex_center'>
+          Hello, fur-riend, please complete your profile.
+      </div>
+      <div className='flex_center'>
+          
           <div style={{justifyContent:"flex-start", height:"100%", width:"40vw"}} className='flex_center left_div'>
           <div className='form_header flex_center'>
                 Doggo
@@ -80,13 +90,13 @@ function Update(props) {
                   <label className='form_label'>
                     DOB owner
                   </label>
-                  <input value={info.ownerDOB} onChange={handleChange} type='text' name="ownerDOB" className='flex_center form_input' />
+                  <input placeholder="MM-DD-YYYY" value={info.ownerDOB} onChange={handleChange} type='text' name="ownerDOB" className='flex_center form_input' />
                 </div>
                 <div>
                   <label className='form_label'>
                     Owner Sex
                   </label>
-                  <input value={info.ownerSex} onChange={handleChange} type='text' name="ownerSex" className='flex_center form_input' />
+                  <input placeholder="M/F/X" value={info.ownerSex} onChange={handleChange} type='text' name="ownerSex" className='flex_center form_input' />
                 </div>
                 <div>
                   <label className='form_label'>
@@ -104,13 +114,13 @@ function Update(props) {
                   <label className='form_label'>
                     DOB Doggo
                   </label>
-                  <input value={info.dogDOB} onChange={handleChange} type='text' name="dogDOB" className='flex_center form_input' />
+                  <input placeholder="MM-DD-YYYY" value={info.dogDOB} onChange={handleChange} type='text' name="dogDOB" className='flex_center form_input' />
                 </div>
                 <div>
                   <label className='form_label'>
                     Doggo sex
                   </label>
-                  <input value={info.dogSex} onChange={handleChange} type='text' name="dogSex" className='flex_center form_input' />
+                  <input placeholder="M/F/X" value={info.dogSex} onChange={handleChange} type='text' name="dogSex" className='flex_center form_input' />
                 </div>
                 <div>
                   <label className='form_label'>
@@ -121,7 +131,7 @@ function Update(props) {
               </div>
           </div>
           <div style={{justifyContent:"flex-start", height:"100%", width:"40vw"}} className='flex_center right_div'>
-            <form id="login_form">
+            <form>
               <div className='form_header flex_center'>
                 You
               </div>
@@ -182,6 +192,7 @@ function Update(props) {
                 <button onClick={handleSubmit} className='form_button'>Update</button>
             </div>
         </div>
+    </div>
       );
 }
 

@@ -48,10 +48,11 @@
 
 .topbar {
   height: 8vh;
-  width: 100vw;
+  width: 98vw;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  border-bottom: 1px solid black;
 }
 
 .top_left {
@@ -60,9 +61,10 @@
 }
 
 .login, .register {
-  font-size: 25px;
+  font-size: 20px;
   padding-left: 15px;
   padding-right: 15px;
+  background-color: white;
 }
 
 .flex_center {
@@ -188,13 +190,14 @@
 
 .home {
   background-image: url(../public/src//index.jpeg);
-  background-size: 85%;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: 50% 80%;
+  background-position: 50% 60%;
 }
 
 a {
   text-decoration: none;
+  color: black;
 }
 
 .lowbar {
@@ -217,6 +220,7 @@ a {
   width: 250px;
   border-radius: 15px;
   color: black;
+  background-color: white;
 }
 
 .trail_data {

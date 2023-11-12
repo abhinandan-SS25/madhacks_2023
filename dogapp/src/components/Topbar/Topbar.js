@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import Example from "./paw.jpeg";
 
 function Topbar({user}) {
     const location = useLocation();
@@ -8,7 +9,7 @@ function Topbar({user}) {
 
     if (pathname === '/') {
         return (
-            <div className='topbar'>
+            <div className=''>
                 
             </div>
         )
@@ -16,7 +17,7 @@ function Topbar({user}) {
     if (pathname === "/login" || pathname === "/register") {
         return (
             <div className='topbar'>
-                <Link to="/" className='top_left'>Bark Avenue</Link>
+                <Link to="/" className='top_left'>Bark Avenue<img style={{height:"6vh"}} src={Example} /></Link>
                 <Link className='register' to={pathname === "/login"? "/register": "/login"}>{pathname === "/login"? "Register": "Login"}</Link>
             </div>
         )
@@ -24,7 +25,7 @@ function Topbar({user}) {
     else {
         return (
             <div className='topbar'>
-                <Link to="/" className='top_left'>Bark Avenue</Link>
+                <Link to="/" className='top_left'>Bark Avenue<img style={{height:"6vh"}} src={Example} /></Link>
                 <Link className='register' to={{pathname:'user/update', state:{username:user.username}}}>Update</Link>
                 <Link className='login' to={{pathname:'/feed', state:{username:user.username}}}>Feed</Link>
                 <Link className='register' to={'/trails/canvas'}>Trails</Link>
