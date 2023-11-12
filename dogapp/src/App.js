@@ -7,6 +7,7 @@ import Registration from './components/registration';
 import Topbar from "./components/Topbar/Topbar";
 import Feed from "./components/main/feed";
 import DrawableCanvas from "./components/main/trails";
+import InteractiveMapWithCanvas from "./components/main/InteractiveMapWithCanvas";
 import Update from "./components/user/update";
 import React, { useState } from 'react';
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/feed" exact element={<Feed user={user} setUser={setUser}/>} />
         <Route path="/user/update" element={<Update user={user}/>} />
         <Route path="/trails" element={<DrawableCanvas user={user}/>} />
+        <Route path="/trails/canvas" element={<InteractiveMapWithCanvas user={user}/>} />
       </Routes>
     </div>
   );

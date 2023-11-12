@@ -29,7 +29,7 @@ function Topbar({user}) {
                 <Link to="/" className='top_left'>Home</Link>
                 <Link className='register' to={{pathname:'user/update', state:{username:user.username}}}>Upate</Link>
                 <Link className='login' to={{pathname:'/feed', state:{username:user.username}}}>Feed</Link>
-                <Link className='register' to={'/trails'}>Trails</Link>
+                <Link className='register' to={'/trails/canvas'}>Trails</Link>
                 <Link className='register'>{user.username}</Link>
             </div>
         )
