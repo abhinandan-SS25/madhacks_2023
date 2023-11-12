@@ -34,7 +34,9 @@ def createExampleNames():
         "username": "vaibhu",
         "phoneNum": "911",
         "password": "qwerty2@",
-        "dogsFavoriteActivities": ";)",
+        "city": "test",
+        "state": "test",
+        "country": "test",
     }
     exampleDict3 = {
         "username": "nandi",
@@ -61,7 +63,8 @@ def returnPeopleAtLocation(username):
     if request.method == "GET":
         # if()
         # val=usersAtLocation(username)
-        val = placeHolderSql.usersAtLocation(username, "LOC")
+        val = database.usersNearby(username)
+        print(val)
         return jsonify(val)
 
 

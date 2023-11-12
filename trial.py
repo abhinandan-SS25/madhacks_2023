@@ -2,7 +2,7 @@ from Database import Database
 
 database = Database()
 exampleDict = {
-    "userName": "test",
+    "username": "test",
     "phoneNum": "test",
     "verification": 0,
     "password": "test",
@@ -22,9 +22,14 @@ exampleDict = {
     "dogsFavoriteActivities": "test",
 }
 example1 = {
-    "userName": "test",
+    "username": "test3",
     "phoneNum": "test",
+    "city": "test",
+    "state":"test",
+    "country":"test"
 }
 
+database.insertUser(exampleDict)
 database.insertUser(example1)
-print(database.getUser("test","test"))
+
+print(database.usersNearby("test"))
