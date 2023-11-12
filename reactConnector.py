@@ -128,6 +128,7 @@ def createExampleNames():
     database.insertUser(exampleDict1)
     database.insertUser(exampleDict2)
     database.insertUser(exampleDict4)
+
     database.setTrail(
         "arnav",
         {
@@ -137,6 +138,7 @@ def createExampleNames():
             ],
             "type": "Polygon",
         },
+        {"lat": "43.2573529", "lon": "-79.8675813"},
     )
     database.setTrail(
         "vaibhu",
@@ -147,6 +149,7 @@ def createExampleNames():
             ],
             "type": "Polygon",
         },
+        {"lat": "43.2573529", "lon": "-79.8675813"},
     )
     database.setTrail(
         "bubs",
@@ -157,6 +160,7 @@ def createExampleNames():
             ],
             "type": "Polygon",
         },
+        {"lat": "43.2573529", "lon": "-79.8675813"},
     )
 
 
@@ -172,7 +176,12 @@ def save_shapes():
         return res
     if request.method == "POST":
         requestedData = json.loads(request.data)
-        database.setTrail(requestedData["username"].strip(), requestedData["data"][0])
+        print(requestedData)
+        database.setTrail(
+            requestedData["username"].strip(),
+            requestedData["data"][0],
+            requestedData["center"],
+        )
         return Response(json.dumps({"status": 200}), status=200)
 
 
@@ -184,9 +193,7 @@ def returnSingleTrail(username):
         res.headers["X-Content-Type-Options"] = "*"
         return res
     if request.method == "GET":
-        val = {}
-        val["trail"] = placeHolderTrail[0]
-        return Response(json.dumps(val), status=200)
+        return Response(json.dumps(database.getTrail(username)), status=200)
 
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
