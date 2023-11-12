@@ -162,3 +162,4 @@ class Database():
              return "USER ALREADY VERIFIED!"
         query = f"update  set verification = 1 where userName = '{username}'"
         self.cur.executescript(query)
+        return "VERIFICATION SUCCESSFUL"
