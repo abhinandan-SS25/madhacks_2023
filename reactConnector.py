@@ -34,7 +34,6 @@ def createExampleNames():
         "username": "vaibhu",
         "phoneNum": "911",
         "password": "qwerty2@",
-
         "dogsFavoriteActivities": ";)",
     }
     exampleDict3 = {
@@ -47,15 +46,12 @@ def createExampleNames():
         "password": "qwerty2@",
         "description": "bubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbub",
     }
-    
-    
+
     database.insertUser(exampleDict1)
     database.insertUser(exampleDict2)
     database.insertUser(exampleDict3)
     database.insertUser(exampleDict4)
-    
-    
-    
+
 
 createExampleNames()
 
@@ -93,17 +89,24 @@ def register():
                 json.dumps({"error": "Password must be between 8 to 16 characters"}),
                 status=202,
             )
-        elif (not re.compile(r"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).*$").match(inputPassword)):
+        elif not re.compile(r"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).*$").match(
+            inputPassword
+        ):
             return Response(
-                json.dumps({"error": "Username must be contain atleast 1 alphabet, 1 digit and 1 symbol"}),
+                json.dumps(
+                    {
+                        "error": "Username must be contain atleast 1 alphabet, 1 digit and 1 symbol"
+                    }
+                ),
                 status=202,
             )
-        elif (inputPassword!=inputConfirm):
+        elif inputPassword != inputConfirm:
             return Response(
-                json.dumps({"error": "Please ensure Confirm Password matches Password"}),
+                json.dumps(
+                    {"error": "Please ensure Confirm Password matches Password"}
+                ),
                 status=202,
             )
-        
 
         elif database.getUser(inputUsername, None) != None:
             return Response(json.dumps({"error": "User already exists"}), status=203)
