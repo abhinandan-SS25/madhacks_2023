@@ -2,7 +2,7 @@ from Database import Database
 
 database = Database()
 exampleDict = {
-    "username": "test",
+    "username": "test1",
     "phoneNum": "test",
     "verification": 0,
     "password": "test",
@@ -106,16 +106,17 @@ database.insertUser(dict2)
 database.insertUser(dict3)
 database.insertUser(dict4)
 database.insertUser(dict5)
-print(database.usersNearby("test"))
-#database.setTrail("test", ["list", "of", "trail"])
-#database.setTrail("test2", ["list", "of", "trail", "2"])
-#database.setTrail("test3", ["list", "of", "trail", "3"])
-#database.likeTrail("test")
-#database.likeTrail("test")
-#database.likeTrail("test")
-#database.likeTrail("test2")
-#database.likeTrail("test3")
-#database.likeTrail("test3")
-#database.onTrail("test", "test2")
-#print(database.getPopularTrails("test"))
-#print(database.getUser("test2"))
+database.setTrail("test1", ["list", "of", "trail", "1"])
+database.setTrail("test2", ["list", "of", "trail", "2"])
+database.setTrail("test3", ["list", "of", "trail", "3"])
+database.setTrail("test4", ["list", "of", "trail", "4"])
+database.setTrail("test5", ["list", "of", "trail", "5"])
+database.likeTrail("test1")
+database.likeTrail("test1")
+database.likeTrail("test1")
+database.likeTrail("test2")
+database.likeTrail("test3")
+database.likeTrail("test3")
+database.onTrail("test", "test2")
+print(database.getPopularTrails("test"))
+print(database.getUser("test2"))
