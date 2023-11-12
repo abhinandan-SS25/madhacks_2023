@@ -11,9 +11,9 @@ class Database():
         self.createTable("userInfo", [
             "userID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE",
             "userName TEXT NOT NULL", "ownerID INTEGER", 
-            "dogID INTEGER", "phoneNum TEXT UNIQUE", 
+            "dogID INTEGER", "phoneNum TEXT", 
             "verification INTEGER NOT NULL", "addressID INTEGER", 
-            "password TEXT", "description TEXT"])
+            "password TEXT NOT NULL", "description TEXT"])
         
         # 0:id, 1:name, 2:dob, 3:sex
         self.createTable("ownerInfo", [
