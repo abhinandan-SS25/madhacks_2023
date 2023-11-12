@@ -2,16 +2,16 @@ import sqlite3
 
 class Database():
     def __init__(self):
-        self.conn = sqlite3.connect(f"myDatabase.sqlite")
+        self.conn = sqlite3.connect(f"myDatabase.sqlite",check_same_thread=False)
         self.cur = self.conn.cursor() 
 
-        # 0:userID, 1:userName, 2:ownerID(foreignKey), 3:dogID(foreignKey), 
+        # 0:userID, 1:username, 2:ownerID(foreignKey), 3:dogID(foreignKey), 
         # 4:phoneNum, 5:verification, 6:addressID(foreignKey),
         # 7:password, 8:description
         self.createTable("userInfo", [
             "userID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE",
-            "userName TEXT NOT NULL", "ownerID INTEGER", 
-            "dogID INTEGER", "phoneNum TEXT UNIQUE", 
+            "username TEXT NOT NULL", "ownerID INTEGER", 
+            "dogID INTEGER", "phoneNum TEXT", 
             "verification INTEGER NOT NULL", "addressID INTEGER", 
             "password TEXT", "description TEXT"])
         
@@ -52,16 +52,16 @@ class Database():
 
     def getUser(self, username, password):
         user = dict()
-        wherequery = f" where userName = '{username}'"
+        wherequery = f" where username = '{username}'"
         if password != None:
             wherequery += f" and password = '{password}'"
         query = "select * from userInfo"
         query += wherequery
         self.cur.execute(query)
-        try: extraction = self.cur.fetchall()[0]
+        try: extraction = self.cur.fetchall()[0]        
         #Try finding better error later
         except IndexError: return None
-        user["userName"] = extraction[1]
+        user["username"] = extraction[1]
         user["phoneNum"] = extraction[4]
         user["verification"] = extraction[5]
         user["description"] = extraction[8]
@@ -102,7 +102,7 @@ class Database():
         return user
 
     def insertUser(self, userValuesDict):
-        userName = userValuesDict.get("userName")
+        username = userValuesDict.get("username")
         phoneNum = userValuesDict.get("phoneNum")
         verification = userValuesDict.get("verification")
         password = userValuesDict.get("password")
@@ -147,17 +147,17 @@ class Database():
         try: ownerID = self.cur.fetchall()[0][0]
         except IndexError: return False
 
-        query = "insert into userInfo(userName,ownerID,dogID,phoneNum,verification,addressID,password,description)"
-        query += f" values ('{userName}','{ownerID}','{dogID}','{phoneNum}','{verification}','{addressID}','{password}','{description}')"
+        query = "insert into userInfo(username,ownerID,dogID,phoneNum,verification,addressID,password,description)"
+        query += f" values ('{username}','{ownerID}','{dogID}','{phoneNum}','{verification}','{addressID}','{password}','{description}')"
         self.cur.executescript(query)
-        self.cur.execute(f"select userID from userInfo where username = '{userName}'")
+        self.cur.execute(f"select userID from userInfo where username = '{username}'")
         try: ownerID = self.cur.fetchall()[0][0]
         except IndexError: return False
         return True
     
     def updateUser(self, username, updateDict):
         userInfoHeaders = ["user"]
-        # 0:userID, 1:userName, 2:ownerID(foreignKey), 3:dogID(foreignKey), 
+        # 0:userID, 1:username, 2:ownerID(foreignKey), 3:dogID(foreignKey), 
         # 4:phoneNum, 5:verification, 6:addressID(foreignKey),
         # 7:password, 8:description
         return
