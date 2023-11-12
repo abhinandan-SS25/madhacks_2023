@@ -76,7 +76,7 @@ const MapWithDrawing = ({user}) => {
           });
     
           // Send the shapesData to the backend using fetch
-          const response = await fetch('http://your-backend-url/save_shapes', {
+          const response = await fetch('http://localhost:5000/save_shapes', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

@@ -19,17 +19,32 @@ exampleDict = {
     "dogBreed": "test",
     "dogDOB": "test",
     "dogSex": "test",
-    "dogsFavoriteActivities": "test",
+    "dogsFavoriteActivities": "test"
 }
-example1 = {
-    "username": "test3",
-    "phoneNum": "test",
+dict2 = {
+    "username": "test2",
+    "phoneNum": "test2",
+    "verification": 1,
+    "password": "test2",
+    "description": "test2",
+    "streetAddress": "test2",
     "city": "test",
-    "state":"test",
-    "country":"test"
+    "state": "test",
+    "country": "test",
+    "pincode": "test",
+    "ownerName": "test2",
+    "ownerDOB": "test2",
+    "ownerSex": "test2",
+    "dogName": "test2",
+    "dogBreed": "test2",
+    "dogDOB": "test2",
+    "dogSex": "test2",
+    "dogsFavoriteActivities": "test2",
 }
-
 database.insertUser(exampleDict)
-database.insertUser(example1)
-
-print(database.usersNearby("test"))
+print(database.getUser("test"))
+#database.insertUser(dict2)
+#print(database.usersNearby("test"))
+#print(database.getUser("test")["RandomVariable"])
+database.setTrail("test", ["list", "of", "trail"])
+print(database.getUser("test"))
