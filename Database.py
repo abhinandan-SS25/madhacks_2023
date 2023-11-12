@@ -50,7 +50,9 @@ class Database:
             "state": state,
             "country": country,
             "pincode": pincode,
-            "trail": None
+            "trail": None,
+            "isCurrentlyOnTrail": 0,
+            "trailFollowing": None
         }
 
         self.db.users.insert_one(user)
@@ -117,15 +119,26 @@ class Database:
         return trail
 
     def likeTrail(self, username):
-        trailToLike = self.db2.trails.find({"username": username})
+        trailToLike = self.db2.trails.find_one({"username": username})
         like = {"$set": {"likes": trailToLike["likes"] + 1 } }
         self.db2.trails.update_one(trailToLike,like)
 
-    def onTrail(self, username):
-        onTrail = self.db2.trails.find({"username": username})
+    def onTrail(self, trailuser, followingUser):
+        onTrail = self.db2.trails.find_one({"username": trailuser})
         addOnTrail = {"$set": {"onTrail": onTrail["onTrail"] + 1 } }
         self.db2.trails.update_one(onTrail,addOnTrail)
+        user = self.db.users.find_one({"username": followingUser})
+        userUpdate = {"$set": {"isCurrentlyOnTrail": 1, "trailFollowing": onTrail["trail"]}}
+        self.db.users.update_one(user,userUpdate)
     
+    def offTrail(self, trailuser, followingUser):
+        user = self.db.users.find_one({"username": followingUser})
+        userUpdate = {"$set": {"isCurrentlyOnTrail": 0, "trailFollowing": None}}
+        self.db.users.update_one(user,userUpdate)
+        offTrail = self.db2.trails.find_one({"username": trailuser})
+        addOnTrail = {"$set": {"onTrail": offTrail["onTrail"] - 1 } }
+        self.db2.trails.update_one(offTrail,addOnTrail)
+
     def getPopularTrails(self, city):
         trails = list(self.db2.trails.find({"city": city}))
         maxLikedTrail1 = None
