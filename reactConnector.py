@@ -209,7 +209,6 @@ def returnPeopleAtLocation(username):
         val["data"] = tempVal
         val["status"] = 200
         val["trails"] = database.getPopularTrails(val["data"][0]["city"])
-        # val["trails"] = placeHolderTrail
         return Response(json.dumps(val), status=200)
 
 
@@ -285,7 +284,7 @@ def update():
                     json.dumps({"error": "Owner name must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["ownerName"].strip()).isalpha():
+            elif not str(requestedData["ownerName"].strip()).replace(' ','').isalpha():
                 return Response(
                     json.dumps({"error": "Owner name must be be alphabetical"}),
                     status=202,
@@ -360,7 +359,7 @@ def update():
                     json.dumps({"error": "Dog name must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["dogName"].strip()).isalpha():
+            elif not str(requestedData["dogName"].strip()).replace(' ','').isalpha():
                 return Response(
                     json.dumps({"error": "Dog name must be be alphabetical"}),
                     status=202,
@@ -384,7 +383,7 @@ def update():
                     json.dumps({"error": "Dog breed must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["dogBreed"].strip()).isalpha():
+            elif not str(requestedData["dogBreed"].strip()).replace(' ','').isalpha():
                 return Response(
                     json.dumps({"error": "Dog breed must be be alphabetical"}),
                     status=202,
@@ -396,7 +395,7 @@ def update():
                     json.dumps({"error": "City name must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["city"].strip()).isalpha():
+            elif not str(requestedData["city"].strip()).replace(' ','').isalpha():
                 return Response(
                     json.dumps({"error": "City name must be be alphabetical"}),
                     status=202,
@@ -433,7 +432,7 @@ def update():
                     json.dumps({"error": "State name must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["state"].strip()).isalpha():
+            elif not str(requestedData["state"].strip()).replace(' ','').isalpha():
                 return Response(
                     json.dumps({"error": "State name must be be alphabetical"}),
                     status=202,
@@ -455,7 +454,7 @@ def update():
                     ),
                     status=202,
                 )
-            elif not str(requestedData["country"].strip()).isalpha():
+            elif not str(requestedData["country"].strip()).replace(' ','').isalpha():
                 return Response(
                     json.dumps({"error": "Country name must be be alphabetical"}),
                     status=202,
@@ -514,12 +513,6 @@ def login():
             return Response(json.dumps(matchedRow), status=200)
     return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
 
-
-@app.route("/test/<name>")
-def returnUsername(name):
-    # getname
-    val = database.getUser(name, None)
-    return val
 
 
 if __name__ == "__main__":
