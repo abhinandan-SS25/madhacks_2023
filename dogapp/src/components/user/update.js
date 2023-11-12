@@ -125,7 +125,7 @@ function Update() {
               <div className='form_header flex_center'>
                 You
               </div>
-              <div className='error'>{error?error: " "}</div>
+              <div className='error'>{error?' ': " "}</div>
               <div className='flex_center form_input_div'>
                 <div>
                   <label className='form_label'>

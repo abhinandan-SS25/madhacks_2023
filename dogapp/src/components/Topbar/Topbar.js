@@ -6,23 +6,28 @@ function Topbar() {
     const location = useLocation();
     const pathname = location.pathname;
 
-    return (
-      <div>
-        {
-            pathname != "/"?
-            <div className='topbar'>
-                <Link to="/" className='top_left'>Home</Link>
-                <Link className='register' to={pathname === "/login"? "/register": "/login"}>{pathname === "/login"? "Register": "Login"}</Link>
-            </div>
-            :
+    if (pathname === '/') {
+        return (
             <div className='topbar'>
                 <Link to="/" className='top_left'>Home</Link>
                 <Link className='login' to="/login">Login</Link>
                 <Link className='register' to="/register">Register</Link>
             </div>
-        }
-      </div>
-    );
+        )
+    }
+    if (pathname === "/login" || pathname === "/register") {
+        <div className='topbar'>
+            <Link to="/" className='top_left'>Home</Link>
+            <Link className='register' to={pathname === "/login"? "/register": "/login"}>{pathname === "/login"? "Register": "Login"}</Link>
+        </div>
+    }
+    else {
+        <div className='topbar'>
+            <Link to="/" className='top_left'>Home</Link>
+            <Link className='login' to="/login">Login</Link>
+            <Link className='register' to="/register">Register</Link>
+        </div>
+    }
   }
   
   export default Topbar;
