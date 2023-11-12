@@ -86,8 +86,6 @@ def returnPeopleAtLocation(username):
     if request.method == "GET":
         val = {}
         tempVal = database.usersNearby(username)
-        for i in range(len(tempVal)):
-            del tempVal[i]["_id"]
         val["data"] = tempVal
         val["status"] = 200
 
@@ -392,7 +390,6 @@ def login():
             matchedRow = database.getUser(inputUsername, inputPassword)
         if matchedRow != None:
             matchedRow["status"] = 200
-            del matchedRow["_id"]
             return Response(json.dumps(matchedRow), status=200)
     return Response(json.dumps({"error": "Incorrect username or password"}), status=201)
 
@@ -401,7 +398,6 @@ def login():
 def returnUsername(name):
     # getname
     val = database.getUser(name, None)
-    del val["_id"]
     return val
 
 
