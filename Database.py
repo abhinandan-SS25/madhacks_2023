@@ -146,8 +146,8 @@ class Database():
         try: ownerID = self.cur.fetchall()[0][0]
         except IndexError: return False
 
-        query = "insert into userInfo(userName,ownerID,dogID,phoneNum,verification,addressID,password,description)"
-        query += f" values ('{userName}','{ownerID}','{dogID}','{phoneNum}','{0}','{addressID}','{password}','{description}')"
+        query = "insert into userInfo(username,ownerID,dogID,phoneNum,verification,addressID,password,description)"
+        query += f" values ('{username}','{ownerID}','{dogID}','{phoneNum}','{0}','{addressID}','{password}','{description}')"
         self.cur.executescript(query)
         self.cur.execute(f"select userID from userInfo where username = '{username}'")
         try: ownerID = self.cur.fetchall()[0][0]
@@ -155,11 +155,38 @@ class Database():
         return True
     
     def verify(self, username):
-        self.cur.execute(f"select verification from userInfo where userName = '{username}'") 
+        self.cur.execute(f"select verification from userInfo where username = '{username}'") 
         try: isVerified = self.cur.fetchall()[0][0]
         except IndexError: return "USER NOT FOUND!"
         if isVerified == 1:
              return "USER ALREADY VERIFIED!"
-        query = f"update  set verification = 1 where userName = '{username}'"
+        query = f"update userInfo set verification = 1 where username = '{username}'"
         self.cur.executescript(query)
         return "VERIFICATION SUCCESSFUL"
+    
+    def updateUser(self, username, updateDict):
+        addresscolumns = ["streetAddress", "city", "state", "country", "pincode"]
+        userColumns = ["phoneNum", "password", "description"]
+        dogDictColumns = ["dogName", "dogBreed", "dogSex", "dogDOB", "dogsFavoriteActivities"]
+        dogColumns = ["name", "breed", "sex", "dob", "favoriteActivities"]
+        ownerDictColumns = ["ownerName", "ownerDOB", "ownerSex"]
+        ownerColumns = ["name", "dob", "sex"]
+        for key in updateDict.keys():
+            if key in addresscolumns:
+                self.cur.execute(f"select addressID from userInfo where username = '{username}'") 
+                try: addressID = self.cur.fetchall()[0][0]
+                except IndexError: return "USER NOT FOUND!"
+                self.cur.executescript(f"update address set {key} = '{updateDict.get(key)}' where id = '{addressID}'")
+            elif key in userColumns:
+                self.cur.executescript(f"update userInfo set {key} = '{updateDict.get(key)}' where username = '{username}'")
+            elif key in dogDictColumns:
+                self.cur.execute(f"select dogID from userInfo where username = '{username}'") 
+                try: dogID = self.cur.fetchall()[0][0]
+                except IndexError: return "USER NOT FOUND!"
+                self.cur.executescript(f"update dogInfo set {dogColumns[dogDictColumns.index(key)]} = '{updateDict.get(key)}' where id = '{dogID}'")
+            elif key in ownerDictColumns:
+                self.cur.execute(f"select ownerID from userInfo where username = '{username}'") 
+                try: ownerID = self.cur.fetchall()[0][0]
+                except IndexError: return "USER NOT FOUND!"
+                self.cur.executescript(f"update ownerInfo set {ownerColumns[ownerDictColumns.index(key)]} = '{updateDict.get(key)}' where id = '{ownerID}'")
+        return "UPDATED SUCCESSFULLY"
