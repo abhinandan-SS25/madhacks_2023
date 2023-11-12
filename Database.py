@@ -102,24 +102,24 @@ class Database():
         return user
 
     def insertUser(self, userValuesDict):
-        userName = userValuesDict["userName"]
-        phoneNum = userValuesDict["phoneNum"]
-        verification = userValuesDict["verification"]
-        password = userValuesDict["password"]
-        description = userValuesDict["description"]
-        streetAddress = userValuesDict["streetAddress"]
-        city = userValuesDict["city"]
-        state = userValuesDict["state"]
-        country = userValuesDict["country"]
-        pincode = userValuesDict["pincode"]
-        ownerName = userValuesDict["ownerName"]
-        ownerDOB = userValuesDict["ownerDOB"]
-        ownerSex = userValuesDict["ownerSex"]
-        dogName = userValuesDict["dogName"]
-        dogBreed = userValuesDict["dogBreed"]
-        dogDOB = userValuesDict["dogDOB"]
-        dogSex = userValuesDict["dogSex"]
-        dogsFavoriteActivities = userValuesDict["dogsFavoriteActivities"]
+        userName = userValuesDict.get("userName")
+        phoneNum = userValuesDict.get("phoneNum")
+        verification = userValuesDict.get("verification")
+        password = userValuesDict.get("password")
+        description = userValuesDict.get("description")
+        streetAddress = userValuesDict.get("streetAddress")
+        city = userValuesDict.get("city")
+        state = userValuesDict.get("state")
+        country = userValuesDict.get("country")
+        pincode = userValuesDict.get("pincode")
+        ownerName = userValuesDict.get("ownerName")
+        ownerDOB = userValuesDict.get("ownerDOB")
+        ownerSex = userValuesDict.get("ownerSex")
+        dogName = userValuesDict.get("dogName")
+        dogBreed = userValuesDict.get("dogBreed")
+        dogDOB = userValuesDict.get("dogDOB")
+        dogSex = userValuesDict.get("dogSex")
+        dogsFavoriteActivities = userValuesDict.get("dogsFavoriteActivities")
 
         query = "insert into address(streetAddress, city, state, country, pincode)"
         query += f" values ('{streetAddress}','{city}','{state}','{country}','{pincode}')"
@@ -154,3 +154,10 @@ class Database():
         try: ownerID = self.cur.fetchall()[0][0]
         except IndexError: return False
         return True
+    
+    def updateUser(self, username, updateDict):
+        userInfoHeaders = ["user"]
+        # 0:userID, 1:userName, 2:ownerID(foreignKey), 3:dogID(foreignKey), 
+        # 4:phoneNum, 5:verification, 6:addressID(foreignKey),
+        # 7:password, 8:description
+        return
