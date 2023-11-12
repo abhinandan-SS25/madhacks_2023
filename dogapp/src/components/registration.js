@@ -75,13 +75,13 @@ function Registration({setUser}) {
                 <label className='form_label'>
                   Account Password
                 </label>
-                <input value={info.password} onChange={handleChange} type='text' name="password" className='form_input' />
+                <input value={info.password} onChange={handleChange} type='password' name="password" className='form_input' />
               </div>
               <div>
                 <label className='form_label'>
                   Confirm Password
                 </label>
-                <input value={info.confirm} onChange={handleChange} type='text' name="confirm" className='form_input' />
+                <input value={info.confirm} onChange={handleChange} type='password' name="confirm" className='form_input' />
               </div>
             </div>
             <div className='form_footer flex_center'>

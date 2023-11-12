@@ -6,131 +6,99 @@ database = Database.Database()
 app = Flask(__name__)
 CORS(app)
 
-dataFormat = {
-    "username": "test",
-    "phoneNum": "test",
-    "verification": 0,
-    "description": "test",
-    "streetAddress": "test",
-    "city": "test",
-    "state": "test",
-    "country": "test",
-    "pincode": "test",
-    "ownerName": "test",
-    "ownerDOB": "test",
-    "ownerSex": "test",
-    "dogName": "test",
-    "dogBreed": "test",
-    "dogDOB": "test",
-    "dogSex": "test",
-    "dogsFavoriteActivities": "test",
-}
+def defaultValues():
+    defaultDict = {
+        "username": "root",
+        "password": "root",
+    }
+    
+    database.insertUser(defaultDict)
 
-placeHolderTrail = [
-    {
-        "trail": {
+    database.setTrail(
+        "root",
+        {
             "coordinates": [
-                [88.40329706668854, 22.49435178996269],
-                [88.40484738349915, 22.494153713312638],
+                [0, 0],
+                [0, 0],
             ],
             "type": "Polygon",
         },
-        "likes": 0,
-        "onTrail": 0,
-        "id": "John",
-    },
-    {
-        "trail": {
-            "coordinates": [
-                [88.40118885040285, 22.49557405191004],
-                [88.41170310974123, 22.49636634867535],
-            ],
-            "type": "Polygon",
-        },
-        "likes": 2,
-        "onTrail": 1,
-        "id": "Jatt",
-    },
-    {
-        "trail": {
-            "coordinates": [
-                [88.46019744873048, 22.49630063972289],
-                [88.41522216796876, 22.470627905020283],
-            ],
-            "type": "Polygon",
-        },
-        "likes": 3,
-        "onTrail": 2,
-        "id": "Julliette",
-    },
-]
+        {"lat": "0", "lon": "0"},
+    )
+
 
 
 def createExampleNames():
     exampleDict1 = {
-        "city": "test",
-        "country": "test",
-        "description": "test",
-        "dogBreed": "test",
-        "dogDOB": "test",
-        "dogName": "test",
-        "dogSex": "test",
-        "dogsFavoriteActivities": "test",
-        "ownerDOB": "test",
-        "ownerName": "test",
-        "ownerSex": "test",
-        "password": "qwerty2@",
-        "phoneNum": "test",
-        "pincode": "test",
-        "state": "test",
-        "streetAddress": "test",
-        "trail": {
-            "coordinates": [
-                [88.40329706668854, 22.49435178996269],
-                [88.40484738349915, 22.494153713312638],
-            ],
-            "type": "Polygon",
-        },
-        "trailLikes": 0,
-        "username": "arnav",
+        "city": "Madison",
+        "country": "USA",
+        "description": "A little lazy, but likes going on walks.",
+        "dogBreed": "Golden Retriever",
+        "dogDOB": "11-10-2017",
+        "dogName": "Sparks",
+        "dogSex": "M",
+        "dogsFavoriteActivities": "Sleeping",
+        "isCurrentlyOnTrail": 0,
+        "ownerDOB": "11-10-2003",
+        "ownerName": "John",
+        "ownerSex": "M",
+        "password": "rootjohn2@",
+        "phoneNum": "6081232291",
+        "pincode": "12312",
+        "state": "WI",
+        "streetAddress": "123 W Park St",
+        "username": "john",
         "verification": 0,
     }
     exampleDict2 = {
-        "city": "test",
-        "country": "test",
-        "description": "",
-        "dogBreed": "",
-        "dogDOB": "",
-        "dogName": "",
-        "dogSex": "",
-        "dogsFavoriteActivities": "",
+        "city": "Madison",
+        "country": "USA",
+        "description": "An excited ball of energy.",
+        "dogBreed": "Poodle",
+        "dogDOB": "01-10-2011",
+        "dogName": "Daisy",
+        "dogSex": "F",
+        "dogsFavoriteActivities": "Running",
         "isCurrentlyOnTrail": 0,
-        "ownerDOB": "",
-        "ownerName": "Johnathan",
-        "ownerSex": "",
-        "password": "qwerty2@",
-        "phoneNum": "9110000000",
-        "pincode": "",
-        "state": "test",
-        "streetAddress": "",
-        "username": "vaibhu",
+        "ownerDOB": "11-02-2003",
+        "ownerName": "May",
+        "ownerSex": "F",
+        "password": "rootmay2@",
+        "phoneNum": "6082222291",
+        "pincode": "12312",
+        "state": "WI",
+        "streetAddress": "323 W Park St",
+        "username": "may12",
         "verification": 0,
     }
-    exampleDict4 = {
-        "username": "bubs",
-        "password": "qwerty2@",
-        "description": "bubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbubbub",
-        "city": "test",
-        "state": "test",
-        "country": "test",
+    exampleDict3 = {
+        "city": "Madison",
+        "country": "USA",
+        "description": "An excited ball of energy.",
+        "dogBreed": "Chihuahua",
+        "dogDOB": "01-10-2017",
+        "dogName": "Sunny",
+        "dogSex": "M",
+        "dogsFavoriteActivities": "Eating",
+        "isCurrentlyOnTrail": 0,
+        "ownerDOB": "11-02-2003",
+        "ownerName": "Mathew",
+        "ownerSex": "M",
+        "password": "rootmatt2@",
+        "phoneNum": "6081111291",
+        "pincode": "12312",
+        "state": "WI",
+        "streetAddress": "223 W Park St",
+        "username": "matt",
+        "verification": 0,
     }
-
+    
     database.insertUser(exampleDict1)
     database.insertUser(exampleDict2)
-    database.insertUser(exampleDict4)
+    database.insertUser(exampleDict3)
 
     database.setTrail(
-        "arnav",
+        "john",
         {
             "coordinates": [
                 [88.40329706668854, 22.49435178996269],
@@ -141,7 +109,7 @@ def createExampleNames():
         {"lat": "43.2573529", "lon": "-79.8675813"},
     )
     database.setTrail(
-        "vaibhu",
+        "may12",
         {
             "coordinates": [
                 [78.40329706668854, 22.49435178996269],
@@ -152,7 +120,7 @@ def createExampleNames():
         {"lat": "43.2573529", "lon": "-79.8675813"},
     )
     database.setTrail(
-        "bubs",
+        "matt",
         {
             "coordinates": [
                 [68.40329706668854, 22.49435178996269],
@@ -163,6 +131,7 @@ def createExampleNames():
         {"lat": "43.2573529", "lon": "-79.8675813"},
     )
 
+defaultValues()
 
 createExampleNames()
 
@@ -176,7 +145,6 @@ def save_shapes():
         return res
     if request.method == "POST":
         requestedData = json.loads(request.data)
-        print(requestedData)
         database.setTrail(
             requestedData["username"].strip(),
             requestedData["data"][0],
@@ -193,7 +161,8 @@ def returnSingleTrail(username):
         res.headers["X-Content-Type-Options"] = "*"
         return res
     if request.method == "GET":
-        return Response(json.dumps(database.getTrail(username)), status=200)
+        returnedTrail=database.getTrail(username)
+        return Response(json.dumps(returnedTrail), status=200)
 
 
 @app.route("/feed/<username>", methods=["GET", "OPTIONS"])
@@ -208,8 +177,8 @@ def returnPeopleAtLocation(username):
         tempVal = database.usersNearby(username)
         val["data"] = tempVal
         val["status"] = 200
+        print(database.getPopularTrails(val["data"][0]["city"]))
         val["trails"] = database.getPopularTrails(val["data"][0]["city"])
-        # val["trails"] = placeHolderTrail
         return Response(json.dumps(val), status=200)
 
 
@@ -285,7 +254,7 @@ def update():
                     json.dumps({"error": "Owner name must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["ownerName"].strip()).isalpha():
+            elif not str(requestedData["ownerName"].strip()).replace(" ", "").isalpha():
                 return Response(
                     json.dumps({"error": "Owner name must be be alphabetical"}),
                     status=202,
@@ -360,7 +329,7 @@ def update():
                     json.dumps({"error": "Dog name must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["dogName"].strip()).isalpha():
+            elif not str(requestedData["dogName"].strip()).replace(" ", "").isalpha():
                 return Response(
                     json.dumps({"error": "Dog name must be be alphabetical"}),
                     status=202,
@@ -384,7 +353,7 @@ def update():
                     json.dumps({"error": "Dog breed must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["dogBreed"].strip()).isalpha():
+            elif not str(requestedData["dogBreed"].strip()).replace(" ", "").isalpha():
                 return Response(
                     json.dumps({"error": "Dog breed must be be alphabetical"}),
                     status=202,
@@ -396,7 +365,7 @@ def update():
                     json.dumps({"error": "City name must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["city"].strip()).isalpha():
+            elif not str(requestedData["city"].strip()).replace(" ", "").isalpha():
                 return Response(
                     json.dumps({"error": "City name must be be alphabetical"}),
                     status=202,
@@ -433,7 +402,7 @@ def update():
                     json.dumps({"error": "State name must be less than 50 characters"}),
                     status=202,
                 )
-            elif not str(requestedData["state"].strip()).isalpha():
+            elif not str(requestedData["state"].strip()).replace(" ", "").isalpha():
                 return Response(
                     json.dumps({"error": "State name must be be alphabetical"}),
                     status=202,
@@ -455,7 +424,7 @@ def update():
                     ),
                     status=202,
                 )
-            elif not str(requestedData["country"].strip()).isalpha():
+            elif not str(requestedData["country"].strip()).replace(" ", "").isalpha():
                 return Response(
                     json.dumps({"error": "Country name must be be alphabetical"}),
                     status=202,
@@ -518,8 +487,9 @@ def login():
 @app.route("/test/<name>")
 def returnUsername(name):
     # getname
-    val = database.getUser(name, None)
-    return val
+    # print(request.args.get("n"))
+    print(str(database.getUser(name, None)))
+    return database.getUser(name, None)
 
 
 if __name__ == "__main__":
