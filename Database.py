@@ -107,12 +107,12 @@ class Database:
         else:
             return None
     
-    def setTrail(self, username, trail):
+    def setTrail(self, username, trail, center):
         user = self.getUser(username)
         if user == None:
             return "username Invalid"
         self.updateUser(username, {"trail": trail})
-        self.db2.trails.insert_one({"trail": trail, "id": username, "city": user["city"], "likes": 0, "onTrail": 0})
+        self.db2.trails.insert_one({"trail": trail, "center": center, "id": username, "city": user["city"], "likes": 0, "onTrail": 0})
 
     def getTrail(self, username):
         trail = self.db2.trails.find_one({"id": username})
