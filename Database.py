@@ -1,11 +1,13 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+import gridfs
 
 class Database:
     def __init__(self):
         uri = "mongodb+srv://VAgarwal46:VAgarwal2512@vagarwal46.s1zbw9l.mongodb.net/?retryWrites=true&w=majority"
         client = MongoClient(uri, server_api=ServerApi('1'))
         self.db = client.MyDatabase
+        self.fs = gridfs.GridFS(self.db)
         self.db.users.delete_many({})
 
     def insertUser(self, userValuesDict):
@@ -45,7 +47,8 @@ class Database:
             "city": city,
             "state": state,
             "country": country,
-            "pincode": pincode
+            "pincode": pincode,
+            "profilePicture": profilePicture
         }
 
         self.db.users.insert_one(user)
@@ -57,14 +60,21 @@ class Database:
         return user
     
     def verify(self, username):
-        self.db.users.update_one({"username": username}, { "$set": { "verification" : 1 } })
+        if self.usernameFound(username):
+            self.db.users.update_one({"username": username}, { "$set": { "verification" : 1 } })
+            return "Account Verified"
+        return "Invalid username!"
 
     def updateUser(self, username, updateDict):
         user = self.getUser(username)
+        if user == None:
+            return "username Invalid"
         self.db.users.update_one(user, {"$set": updateDict})
 
     def usersNearby(self, username):
         user = self.getUser(username)
+        if user == None:
+            return "username Invalid"
         usersNearby = []
         users = self.db.users.find({"city": user["city"], "state": user["state"]})
         usersList = list(users)
@@ -72,3 +82,14 @@ class Database:
         for i in usersList:
             usersNearby.append(i)
         return usersNearby
+    
+    def setProfilePicture(self, username, profilePicture):
+        picture = self.fs.put(profilePicture)
+        self.updateUser(username, {"profilePicture": picture})
+
+    def usernameFound(self, username):
+        user = self.db.users.find_one({"username": username})
+        if user == None:
+            return False
+        return True
+        
