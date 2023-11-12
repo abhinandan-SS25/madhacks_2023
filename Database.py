@@ -10,11 +10,7 @@ class Database():
         # 7:password, 8:description
         self.createTable("userInfo", [
             "userID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE",
-<<<<<<< HEAD
-            "userName TEXT NOT NULL", "ownerID INTEGER", 
-=======
             "username TEXT NOT NULL", "ownerID INTEGER", 
->>>>>>> c58714ebb568599a6ed3b1539c3213807bdcafbe
             "dogID INTEGER", "phoneNum TEXT", 
             "verification INTEGER NOT NULL", "addressID INTEGER", 
             "password TEXT NOT NULL", "description TEXT"])
