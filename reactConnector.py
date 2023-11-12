@@ -135,6 +135,20 @@ defaultValues()
 
 createExampleNames()
 
+@app.route("/routes/like",methods=["POST","GET","OPTIONS"])
+def like():
+    # CORS
+    if request.method == "OPTIONS":
+        res = Response()
+        res.headers["X-Content-Type-Options"] = "*"
+        return res
+    if request.method == "POST":
+        requestedData = json.loads(request.data)
+        username=requestedData["username"]
+        database.likeTrail(username)
+        returnedTrail=database.getTrail(username)
+        return Response(json.dumps(returnedTrail), status=200)
+
 
 @app.route("/save_shapes", methods=["POST", "OPTIONS"])
 def save_shapes():
@@ -177,8 +191,8 @@ def returnPeopleAtLocation(username):
         tempVal = database.usersNearby(username)
         val["data"] = tempVal
         val["status"] = 200
-        print(database.getPopularTrails(val["data"][0]["city"]))
         val["trails"] = database.getPopularTrails(val["data"][0]["city"])
+        #print(val)
         return Response(json.dumps(val), status=200)
 
 

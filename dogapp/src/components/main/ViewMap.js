@@ -88,7 +88,7 @@ const ViewMap = () => {
           Users that follow this route
         </div>
         <div className='button'>
-          <button onChange={handleLike} className='form_button'>Like</button>
+          <button onClick={handleLike} className='form_button'>Like</button>
         </div>
       </div>
     </div>);
