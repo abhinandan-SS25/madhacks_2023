@@ -6,9 +6,11 @@ class Database:
     def __init__(self):
         uri = "mongodb+srv://VAgarwal46:VAgarwal2512@vagarwal46.s1zbw9l.mongodb.net/?retryWrites=true&w=majority"
         client = MongoClient(uri, server_api=ServerApi('1'))
-        self.db = client.MyDatabase
+        self.db = client.UserDatabase
+        self.db2 = client.trailDatabase
         self.fs = gridfs.GridFS(self.db)
         self.db.users.delete_many({})
+        self.db2.trails.delete_many({})
 
     def insertUser(self, userValuesDict):
         username = userValuesDict.get("username")
@@ -48,8 +50,7 @@ class Database:
             "state": state,
             "country": country,
             "pincode": pincode,
-            "trail": None,
-            "trailLikes": None
+            "trail": None
         }
 
         self.db.users.insert_one(user)
@@ -105,12 +106,68 @@ class Database:
         user = self.getUser(username)
         if user == None:
             return "username Invalid"
-        self.updateUser(username, {"trail": trail, "trailLikes": 0})
+        self.updateUser(username, {"trail": trail})
+        self.db2.trails.insert_one({"trail": trail, "likes": 0, "onTrail": 0})
 
-    def likeTrail(self, username):
-        user = self.getUser(username)
-        if user == None:
-            return "username Invalid"
-        self.db.users.update_one(user, {"$set": user["trailLikes"]+1 })
+    def likeTrail(self, trail):
+        trailToLike = self.db2.trails.find({"trail": trail})
+        like = {"$set": {"likes": trailToLike["likes"] + 1 } }
+        self.db2.trails.update_one(trail,like)
+
+    def onTrail(self, trail):
+        addOnTrail = {"$set": {"onTrail": "onTrail"+1 } }
+        onTrail = self.db2.trails.find({"trail": trail})
+        addOnTrail = {"$set": {"onTrail": onTrail["onTrail"] + 1 } }
+        self.db2.trails.update_one(trail,addOnTrail)
+    
+    def getPopularTrails(self):
+        trails = list(self.db2.trails.find())
+        maxLikedTrail1 = None
+        maxLikedTrail2 = None
+        maxLikedTrail3 = None
+        popularTrails = []
+        if len(trails) >= 3:
+            maxLikedTrail1 = trails[0]
+            if trails[1]["trailLikes"] > maxLikedTrail1:
+                maxLikedTrail2 = maxLikedTrail1
+                maxLikedTrail1 = trails[1]
+            else:
+                maxLikedTrail2 = trails[1]
+            if trails[2]["trailLikes"] > maxLikedTrail1:
+                maxLikedTrail3 = maxLikedTrail2
+                maxLikedTrail2 = maxLikedTrail1
+                maxLikedTrail1 = trails[2]
+            elif trails[2]["trailLikes"] > maxLikedTrail2:
+                maxLikedTrail3 = maxLikedTrail2
+                maxLikedTrail2 = trails[2]
+            else:
+                maxLikedTrail3 = trails[2]
+            maxLikedTrail3 = trails[2]
+            for i in range(3,len(trails)):
+                if trails[i]["trailLikes"] > maxLikedTrail1["trailLikes"]:
+                    maxLikedTrail3 = maxLikedTrail2
+                    maxLikedTrail2 = maxLikedTrail1
+                    maxLikedTrail1 = trails[i]
+                elif trails[i]["trailLikes"] > maxLikedTrail2["trailLikes"]:
+                    maxLikedTrail3 = maxLikedTrail2
+                    maxLikedTrail2 = trails[i]
+                elif trails[i]["trailLikes"] > maxLikedTrail3["trailLikes"]:
+                    maxLikedTrail3 = trails[i]
+            popularTrails = [maxLikedTrail1, maxLikedTrail2, maxLikedTrail3]
+        elif len(trails) == 2:
+            maxLikedTrail1 = trails[0]
+            if trails[1]["trailLikes"] > maxLikedTrail1:
+                maxLikedTrail2 = maxLikedTrail1
+                maxLikedTrail1 = trails[1]
+            else:
+                maxLikedTrail2 = trails[1]
+            popularTrails = [maxLikedTrail1, maxLikedTrail2]
+        elif len(trails) == 1:
+            popularTrails = [trails[0],]
+        else:
+            return None
+        for i in popularTrails:
+            del i["_id"]
+        return popularTrails
 
         
